@@ -1,0 +1,175 @@
+﻿@model GestionProyectoCS.Models.Datos.EMPLEADO
+
+@{
+    ViewBag.Title = "Eliminar Empleado";
+}
+
+<div class="app-main">
+    @Html.Partial("_SideBar")
+    <div class="app-main__outer">
+        <div class="app-main__inner">
+            <div class="app-page-title">
+                <div class="page-title-wrapper">
+                    <div class="page-title-heading">
+                        <div class="page-title-icon">
+                            <i class="pe-7s-users icon-gradient bg-warm-flame">
+                            </i>
+                        </div>
+                        <div>
+                            Empleados
+                            <div class="page-title-subheading">
+                                Eliminar Empleado
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <div>
+                                <h4>Esta seguro de eliminar este empelado?</h4>
+                                <hr />
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                       Nombres
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.NOMBRES)
+                                    </dd>
+
+                                    <dt>
+                                      Apellidos
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.APELLIDOS)
+                                    </dd>
+
+                                    <dt>
+                                        Identidad
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.IDENTIDAD)
+                                    </dd>
+
+                                    <dt>
+                                        Color
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.COLOR)
+                                    </dd>
+
+                                    <dt>
+                                        Telefono1
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.TELEF1)
+                                    </dd>
+
+                                    <dt>
+                                       Telefono2
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.TELEF2)
+                                    </dd>
+
+                                    <dt>
+                                       Correo1
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.EMAIL1)
+                                    </dd>
+
+                                    <dt>
+                                        Correo2
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.EMAIL2)
+                                    </dd>
+
+                                    <dt>
+                                        Calendario Id Google
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.ID_CALENDAR)
+                                    </dd>
+
+                                    <dt>
+                                        Estado
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.ACTIVO)
+                                    </dd>
+
+                                    <dt>
+                                        Usuario Creacion
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.USUARIO_CREACION)
+                                    </dd>
+
+                                    <dt>
+                                        Fecha Creacion
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.FECHA_CREACION)
+                                    </dd>
+
+                                    <dt>
+                                       Usuario Modificacion
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.USUARIO_MODIFICACION)
+                                    </dd>
+
+                                    <dt>
+                                        Fecha Modificacion
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.FECHA_MODIFICACION)
+                                    </dd>
+
+                                    <dt>
+                                        Descripcion
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.CARGO.DESCRIPCION)
+                                    </dd>
+
+                                </dl>
+
+                                @using (Html.BeginForm())
+                                {
+                                    @Html.AntiForgeryToken()
+
+                                    <div class="form-actions no-color">
+                                        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+                                        @Html.ActionLink("Regresar a la Lista", "Index")
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

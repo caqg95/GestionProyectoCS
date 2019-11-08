@@ -1,0 +1,131 @@
+﻿@{
+    ViewBag.Title = "Agenda De Empleado";
+}
+<link href="~/Content/dx.common.css" rel="stylesheet" />
+<link href="~/Content/dx.light.css" rel="stylesheet" />
+<div class="app-main">
+    @Html.Partial("_SideBar")
+    <div class="app-main__outer">
+        <div class="app-main__inner">
+            <div class="app-page-title">
+                <div class="page-title-wrapper">
+                    <div class="page-title-heading">
+                        <div class="page-title-icon">
+                            <i class="pe-7s-check icon-gradient bg-warm-flame">
+                            </i>
+                        </div>
+                        <div>
+                            Reporte De Agenda
+                            <div class="page-title-subheading">
+                                Agenda Semanal De Empelado
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <h5 class="card-title">Agenda De Cliente</h5>
+                            <div class="col-md-10 mx-auto" style="margin-top:40px">
+                                <div class="form-group">
+                                    <label for="firstname">Cliente</label>
+                                    <div>
+                                        <div id="EMPLEADO"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastname">Fecha Inicio</label>
+                                    <div>
+                                        <div class="input-group date" id="dtp1" style="width:1000px"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="username">Fecha Fin</label>
+                                    <div>
+                                        <div class="input-group date" id="dtp2" style="width:1000px"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary" name="btnreporte" id="btnreporte" value="Reporte">Reporte</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script src="~/Scripts/dx.all.js"></script>
+    <script src="~/Scripts/cldr/jquery-ui.min.js"></script>
+    <script src="~/Scripts/cldr/moment.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#btnreporte').click(function () {
+
+                let empleado = $("#EMPLEADO").dxSelectBox('instance').option("value");
+                let fi = $("#dtp1").dxDateBox('instance').option("value");
+                let ff = $("#dtp2").dxDateBox('instance').option("value");
+
+                if ($("#EMPLEADO").dxSelectBox('instance').option("value") == null) {
+                    alert('El EMPLEADO es requerido');
+                    return;
+                }
+                if ($("#dtp1").dxDateBox('instance').option("value") == null) {
+                    alert('La fecha de inicio es requerido');
+                    return;
+                }
+                if ($("#dtp2").dxDateBox('instance').option("value") == null) {
+                    alert('La fecha fin es requerido');
+                    return;
+                }
+                //Open modal dialog for edit event
+                //window.open('/Agenda/FormartoAgendaCliente?cliente=' + cliente + '&fi=' + fi + '&ff=' + ff, '_blank');
+                window.open('/Agenda/FormartoAgendaEmpleado?empleado=' + empleado + '&fi=' + fi.toLocaleDateString("en-US") + '&ff=' + ff.toLocaleDateString("en-US"), '_blank');
+                //  + ',fi=' + fi.toLocaleDateString("en-US") + ',ff=' + ff.toLocaleDateString("en-US"),
+            })
+            $("#dtp1,#dtp2").dxDateBox({
+                type: "date",
+                timeFormat: 'DD/MM/YYYY',
+                pickerType: "list",
+                interval: 30,
+                showClearButton: true
+            });
+            SelectEmpleados();
+        });
+        function SelectEmpleados() {
+            var empleados = [];
+            $.ajax({
+                type: "GET",
+                url: "/Agenda/GetEmpleados",
+                success: function (data) {
+                    $.each(data, function (i, v) {
+                        empleados.push({
+                            ID: v.ID,
+                            NOMBRE: v.NOMBRE,
+                        });
+                    })
+                    $("#EMPLEADO").dxSelectBox({
+                        placeholder: "Seleccione el empleado",
+                        dataSource: new DevExpress.data.ArrayStore({
+                            data: empleados,
+                            key: "ID"
+                        }),
+                        displayExpr: "NOMBRE",
+                        valueExpr: "ID",
+                        searchEnabled: true,
+                        showClearButton: true
+                    });
+                },
+                error: function (error) {
+                    alert(error);
+                    console.log(error);
+                }
+            })
+        }
+    </script>
+}

@@ -1,0 +1,900 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GESTIONPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Discriminator" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="ID_EMPELADO" Type="int" />
+        </EntityType>
+        <EntityType Name="CARGO">
+          <Key>
+            <PropertyRef Name="ID_CARGO" />
+          </Key>
+          <Property Name="ID_CARGO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DESCRIPCION" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="ACTIVO" Type="bit" Nullable="false" />
+          <Property Name="USUARIO_CREACION" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FECHA_CREACION" Type="datetime" Nullable="false" />
+          <Property Name="USUARIO_MODIFICACION" Type="nvarchar" MaxLength="50" />
+          <Property Name="FECHA_MODIFICACION" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CATALOGO_ACTIVIDAD">
+          <Key>
+            <PropertyRef Name="ID_ACTIVIDAD" />
+          </Key>
+          <Property Name="ID_ACTIVIDAD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DESCRIPCION" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TIPO" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="ID_ACTIVIDAD_PADRE" Type="int" />
+          <Property Name="CANT_MIN_HORA" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CANT_MAX_HORA" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="COMPLEJIDAD" Type="nchar" MaxLength="10" />
+          <Property Name="ACTIVO" Type="bit" Nullable="false" />
+          <Property Name="USUARIO_CREACION" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FECHA_CREACION" Type="datetime" Nullable="false" />
+          <Property Name="USUARIO_MODIFICACION" Type="nvarchar" MaxLength="50" />
+          <Property Name="FECHA_MODIFICACION" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CLIENTE">
+          <Key>
+            <PropertyRef Name="ID_CLIENTE" />
+          </Key>
+          <Property Name="ID_CLIENTE" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="COD_CLIENTE" Type="nvarchar" MaxLength="50" />
+          <Property Name="CLIENTE" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ACTIVO" Type="bit" Nullable="false" />
+          <Property Name="DIRECCION" Type="nvarchar" MaxLength="200" />
+          <Property Name="USUARIO_CREACION" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FECHA_CREACION" Type="datetime" Nullable="false" />
+          <Property Name="USUARIO_MODIFICACION" Type="nvarchar" MaxLength="50" />
+          <Property Name="FECHA_MODIFICACION" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CONTACTO">
+          <Key>
+            <PropertyRef Name="ID_CONTACTO" />
+          </Key>
+          <Property Name="ID_CONTACTO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOMBRES" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="APELLIDOS" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="TELF1" Type="nchar" MaxLength="20" />
+          <Property Name="TELF2" Type="nchar" MaxLength="20" />
+          <Property Name="EXT" Type="nchar" MaxLength="20" />
+          <Property Name="EMAIL1" Type="nvarchar" MaxLength="200" />
+          <Property Name="EMAIL2" Type="nvarchar" MaxLength="200" />
+          <Property Name="ACTIVO" Type="bit" Nullable="false" />
+          <Property Name="ID_CLIENTE" Type="int" Nullable="false" />
+          <Property Name="ID_RESPONSABLE" Type="int" Nullable="false" />
+          <Property Name="USUARIO_CREACION" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FECHA_CREACION" Type="datetime" Nullable="false" />
+          <Property Name="USUARIO_MODIFICACION" Type="nvarchar" MaxLength="50" />
+          <Property Name="FECHA_MODIFICACION" Type="datetime" />
+        </EntityType>
+        <EntityType Name="EMPLEADO">
+          <Key>
+            <PropertyRef Name="ID_EMPLEADO" />
+          </Key>
+          <Property Name="ID_EMPLEADO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_CARGO" Type="int" Nullable="false" />
+          <Property Name="NOMBRES" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="APELLIDOS" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="IDENTIDAD" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="COLOR" Type="nvarchar" MaxLength="20" />
+          <Property Name="TELEF1" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TELEF2" Type="nvarchar" MaxLength="50" />
+          <Property Name="EMAIL1" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="EMAIL2" Type="nvarchar" MaxLength="150" />
+          <Property Name="ID_CALENDAR" Type="nvarchar" MaxLength="150" />
+          <Property Name="ACTIVO" Type="bit" Nullable="false" />
+          <Property Name="USUARIO_CREACION" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FECHA_CREACION" Type="datetime" Nullable="false" />
+          <Property Name="USUARIO_MODIFICACION" Type="nvarchar" MaxLength="50" />
+          <Property Name="FECHA_MODIFICACION" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ESTADO">
+          <Key>
+            <PropertyRef Name="ID_ESTADO" />
+          </Key>
+          <Property Name="ID_ESTADO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DESCRIPCION" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="ACTIVO" Type="bit" Nullable="false" />
+          <Property Name="USUARIO_CREACION" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FECHA_CREACION" Type="datetime" Nullable="false" />
+          <Property Name="USUARIO_MODIFICACION" Type="nvarchar" MaxLength="50" />
+          <Property Name="FECHA_MODIFICACION" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PROYECTO">
+          <Key>
+            <PropertyRef Name="ID_PROYECTO" />
+          </Key>
+          <Property Name="ID_PROYECTO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_CLIENTE" Type="int" Nullable="false" />
+          <Property Name="DESCRIPCION" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="FECHA_INICIO" Type="datetime" Nullable="false" />
+          <Property Name="FECHA_FIN" Type="datetime" Nullable="false" />
+          <Property Name="LONGITUD" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="LATITUD" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="EMPLEADO_RESPONSABLE" Type="int" />
+          <Property Name="OBSERVACION" Type="nvarchar" MaxLength="300" />
+          <Property Name="ACTIVO" Type="bit" Nullable="false" />
+          <Property Name="USUARIO_CREACION" Type="int" Nullable="false" />
+          <Property Name="FECHA_CREACION" Type="datetime" Nullable="false" />
+          <Property Name="USUARIO_MODIFICACION" Type="int" />
+          <Property Name="FECHA_MODIFICACION" Type="datetime" />
+        </EntityType>
+        <EntityType Name="RESPONSABLE">
+          <Key>
+            <PropertyRef Name="ID_RESPONSABLE" />
+          </Key>
+          <Property Name="ID_RESPONSABLE" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DESCRIPCION" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="ACTIVO" Type="bit" Nullable="false" />
+          <Property Name="USUARIO_CREACION" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FECHA_CREACION" Type="datetime" Nullable="false" />
+          <Property Name="USUARIO_MODIFICACION" Type="nvarchar" MaxLength="50" />
+          <Property Name="FECHA_MODIFICACION" Type="datetime" />
+        </EntityType>
+        <EntityType Name="VISITA">
+          <Key>
+            <PropertyRef Name="ID_VISITA" />
+          </Key>
+          <Property Name="ID_VISITA" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_CLIENTE" Type="int" Nullable="false" />
+          <Property Name="ID_EMPLEADO" Type="int" Nullable="false" />
+          <Property Name="ASUNTO" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="DESCRIPCION" Type="nvarchar" MaxLength="500" />
+          <Property Name="ID_ESTADO" Type="int" Nullable="false" />
+          <Property Name="FECHA_INICIO" Type="datetime" Nullable="false" />
+          <Property Name="FECHA_FIN" Type="datetime" Nullable="false" />
+          <Property Name="ID_EVENT" Type="nvarchar" MaxLength="50" />
+          <Property Name="ACTIVO" Type="bit" Nullable="false" />
+          <Property Name="USUARIO_CREACION" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FECHA_CREACION" Type="datetime" Nullable="false" />
+          <Property Name="USUARIO_MODIFICACION" Type="nvarchar" MaxLength="50" />
+          <Property Name="FECHA_MODIFICACION" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_CONTACTO">
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
+          <End Role="CONTACTO" Type="Self.CONTACTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Principal>
+            <Dependent Role="CONTACTO">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLEADO_CARGO">
+          <End Role="CARGO" Type="Self.CARGO" Multiplicity="1" />
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARGO">
+              <PropertyRef Name="ID_CARGO" />
+            </Principal>
+            <Dependent Role="EMPLEADO">
+              <PropertyRef Name="ID_CARGO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROYECTO_CLIENTE">
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
+          <End Role="PROYECTO" Type="Self.PROYECTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Principal>
+            <Dependent Role="PROYECTO">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESPONSABLE">
+          <End Role="RESPONSABLE" Type="Self.RESPONSABLE" Multiplicity="1" />
+          <End Role="CONTACTO" Type="Self.CONTACTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RESPONSABLE">
+              <PropertyRef Name="ID_RESPONSABLE" />
+            </Principal>
+            <Dependent Role="CONTACTO">
+              <PropertyRef Name="ID_RESPONSABLE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VISITA_CLIENTE">
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
+          <End Role="VISITA" Type="Self.VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Principal>
+            <Dependent Role="VISITA">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VISITA_EMPLEADO">
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+          <End Role="VISITA" Type="Self.VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="ID_EMPLEADO" />
+            </Principal>
+            <Dependent Role="VISITA">
+              <PropertyRef Name="ID_EMPLEADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VISITA_ESTADO">
+          <End Role="ESTADO" Type="Self.ESTADO" Multiplicity="1" />
+          <End Role="VISITA" Type="Self.VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ESTADO">
+              <PropertyRef Name="ID_ESTADO" />
+            </Principal>
+            <Dependent Role="VISITA">
+              <PropertyRef Name="ID_ESTADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="SpListadoUsuarioDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SpListadoVistasCS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="GESTIONPModelStoreContainer">
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CARGO" EntityType="Self.CARGO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CATALOGO_ACTIVIDAD" EntityType="Self.CATALOGO_ACTIVIDAD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CONTACTO" EntityType="Self.CONTACTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EMPLEADO" EntityType="Self.EMPLEADO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ESTADO" EntityType="Self.ESTADO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PROYECTO" EntityType="Self.PROYECTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RESPONSABLE" EntityType="Self.RESPONSABLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VISITA" EntityType="Self.VISITA" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CONTACTO" Association="Self.FK_CONTACTO">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="CONTACTO" EntitySet="CONTACTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLEADO_CARGO" Association="Self.FK_EMPLEADO_CARGO">
+            <End Role="CARGO" EntitySet="CARGO" />
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROYECTO_CLIENTE" Association="Self.FK_PROYECTO_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="PROYECTO" EntitySet="PROYECTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESPONSABLE" Association="Self.FK_RESPONSABLE">
+            <End Role="RESPONSABLE" EntitySet="RESPONSABLE" />
+            <End Role="CONTACTO" EntitySet="CONTACTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VISITA_CLIENTE" Association="Self.FK_VISITA_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="VISITA" EntitySet="VISITA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VISITA_EMPLEADO" Association="Self.FK_VISITA_EMPLEADO">
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+            <End Role="VISITA" EntitySet="VISITA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VISITA_ESTADO" Association="Self.FK_VISITA_ESTADO">
+            <End Role="ESTADO" EntitySet="ESTADO" />
+            <End Role="VISITA" EntitySet="VISITA" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GESTIONPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="GESTIONP_CSEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="SpListadoVistasCS" ReturnType="Collection(GESTIONPModel.SpListadoVistasCS_Result)" />
+          <EntitySet Name="CARGOes" EntityType="GESTIONPModel.CARGO" />
+          <EntitySet Name="CATALOGO_ACTIVIDAD" EntityType="GESTIONPModel.CATALOGO_ACTIVIDAD" />
+          <EntitySet Name="CLIENTEs" EntityType="GESTIONPModel.CLIENTE" />
+          <EntitySet Name="EMPLEADOes" EntityType="GESTIONPModel.EMPLEADO" />
+          <EntitySet Name="ESTADOes" EntityType="GESTIONPModel.ESTADO" />
+          <EntitySet Name="PROYECTOes" EntityType="GESTIONPModel.PROYECTO" />
+          <EntitySet Name="RESPONSABLEs" EntityType="GESTIONPModel.RESPONSABLE" />
+          <EntitySet Name="VISITAs" EntityType="GESTIONPModel.VISITA" />
+          <AssociationSet Name="FK_EMPLEADO_CARGO" Association="GESTIONPModel.FK_EMPLEADO_CARGO">
+            <End Role="CARGO" EntitySet="CARGOes" />
+            <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROYECTO_CLIENTE" Association="GESTIONPModel.FK_PROYECTO_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTEs" />
+            <End Role="PROYECTO" EntitySet="PROYECTOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VISITA_CLIENTE" Association="GESTIONPModel.FK_VISITA_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTEs" />
+            <End Role="VISITA" EntitySet="VISITAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VISITA_EMPLEADO" Association="GESTIONPModel.FK_VISITA_EMPLEADO">
+            <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
+            <End Role="VISITA" EntitySet="VISITAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VISITA_ESTADO" Association="GESTIONPModel.FK_VISITA_ESTADO">
+            <End Role="ESTADO" EntitySet="ESTADOes" />
+            <End Role="VISITA" EntitySet="VISITAs" />
+          </AssociationSet>
+          <EntitySet Name="CONTACTOes" EntityType="GESTIONPModel.CONTACTO" />
+          <AssociationSet Name="FK_CONTACTO" Association="GESTIONPModel.FK_CONTACTO">
+            <End Role="CLIENTE" EntitySet="CLIENTEs" />
+            <End Role="CONTACTO" EntitySet="CONTACTOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESPONSABLE" Association="GESTIONPModel.FK_RESPONSABLE">
+            <End Role="RESPONSABLE" EntitySet="RESPONSABLEs" />
+            <End Role="CONTACTO" EntitySet="CONTACTOes" />
+          </AssociationSet>
+          <EntitySet Name="AspNetRoles" EntityType="GESTIONPModel.AspNetRole" />
+          <FunctionImport Name="SpListadoUsuarioDetail" ReturnType="Collection(GESTIONPModel.SpListadoUsuarioDetail_Result)" />
+          <EntitySet Name="AspNetUsers" EntityType="GESTIONPModel.AspNetUser" />
+          </EntityContainer>
+        <ComplexType Name="SpListadoVistasCS_Result">
+          <Property Type="Int32" Name="ID_VISITA" Nullable="false" />
+          <Property Type="Int32" Name="ID_CLIENTE" Nullable="false" />
+          <Property Type="String" Name="CLIENTE" Nullable="false" MaxLength="200" />
+          <Property Type="Int32" Name="ID_EMPLEADO" Nullable="false" />
+          <Property Type="String" Name="NOMBRES" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="APELLIDOS" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="ASUNTO" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="DESCRIPCION" Nullable="true" MaxLength="500" />
+          <Property Type="DateTime" Name="FECHA_INICIO" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="FECHA_FIN" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="ID_ESTADO" Nullable="false" />
+          <Property Type="String" Name="ESTADO" Nullable="false" MaxLength="250" />
+          <Property Type="Boolean" Name="ACTIVO" Nullable="false" />
+          <Property Type="String" Name="COLOR" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ID_CALENDAR" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="ID_EVENT" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="EMPLEADO" Nullable="false" MaxLength="501" />
+          <Property Type="DateTime" Name="FECHA_CREACION" Nullable="false" Precision="23" />
+        </ComplexType>
+        <EntityType Name="CARGO">
+          <Key>
+            <PropertyRef Name="ID_CARGO" />
+          </Key>
+          <Property Name="ID_CARGO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DESCRIPCION" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+          <Property Name="USUARIO_CREACION" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="USUARIO_MODIFICACION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="EMPLEADOes" Relationship="GESTIONPModel.FK_EMPLEADO_CARGO" FromRole="CARGO" ToRole="EMPLEADO" />
+        </EntityType>
+        <EntityType Name="CATALOGO_ACTIVIDAD">
+          <Key>
+            <PropertyRef Name="ID_ACTIVIDAD" />
+          </Key>
+          <Property Name="ID_ACTIVIDAD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DESCRIPCION" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TIPO" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ID_ACTIVIDAD_PADRE" Type="Int32" />
+          <Property Name="CANT_MIN_HORA" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CANT_MAX_HORA" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="COMPLEJIDAD" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+          <Property Name="USUARIO_CREACION" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="USUARIO_MODIFICACION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="CLIENTE">
+          <Key>
+            <PropertyRef Name="ID_CLIENTE" />
+          </Key>
+          <Property Name="ID_CLIENTE" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="COD_CLIENTE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CLIENTE1" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+          <Property Name="DIRECCION" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="USUARIO_CREACION" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="USUARIO_MODIFICACION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="PROYECTOes" Relationship="GESTIONPModel.FK_PROYECTO_CLIENTE" FromRole="CLIENTE" ToRole="PROYECTO" />
+          <NavigationProperty Name="VISITAs" Relationship="GESTIONPModel.FK_VISITA_CLIENTE" FromRole="CLIENTE" ToRole="VISITA" />
+          <NavigationProperty Name="CONTACTOes" Relationship="GESTIONPModel.FK_CONTACTO" FromRole="CLIENTE" ToRole="CONTACTO" />
+        </EntityType>
+        <EntityType Name="EMPLEADO">
+          <Key>
+            <PropertyRef Name="ID_EMPLEADO" />
+          </Key>
+          <Property Name="ID_EMPLEADO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_CARGO" Type="Int32" Nullable="false" />
+          <Property Name="NOMBRES" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="APELLIDOS" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IDENTIDAD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="COLOR" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="TELEF1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TELEF2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EMAIL1" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="EMAIL2" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ID_CALENDAR" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+          <Property Name="USUARIO_CREACION" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="USUARIO_MODIFICACION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CARGO" Relationship="GESTIONPModel.FK_EMPLEADO_CARGO" FromRole="EMPLEADO" ToRole="CARGO" />
+          <NavigationProperty Name="VISITAs" Relationship="GESTIONPModel.FK_VISITA_EMPLEADO" FromRole="EMPLEADO" ToRole="VISITA" />
+        </EntityType>
+        <EntityType Name="ESTADO">
+          <Key>
+            <PropertyRef Name="ID_ESTADO" />
+          </Key>
+          <Property Name="ID_ESTADO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DESCRIPCION" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+          <Property Name="USUARIO_CREACION" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="USUARIO_MODIFICACION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="VISITAs" Relationship="GESTIONPModel.FK_VISITA_ESTADO" FromRole="ESTADO" ToRole="VISITA" />
+        </EntityType>
+        <EntityType Name="PROYECTO">
+          <Key>
+            <PropertyRef Name="ID_PROYECTO" />
+          </Key>
+          <Property Name="ID_PROYECTO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_CLIENTE" Type="Int32" Nullable="false" />
+          <Property Name="DESCRIPCION" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="FECHA_INICIO" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FECHA_FIN" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LONGITUD" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="LATITUD" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="EMPLEADO_RESPONSABLE" Type="Int32" />
+          <Property Name="OBSERVACION" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+          <Property Name="USUARIO_CREACION" Type="Int32" Nullable="false" />
+          <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="USUARIO_MODIFICACION" Type="Int32" />
+          <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CLIENTE" Relationship="GESTIONPModel.FK_PROYECTO_CLIENTE" FromRole="PROYECTO" ToRole="CLIENTE" />
+        </EntityType>
+        <EntityType Name="RESPONSABLE">
+          <Key>
+            <PropertyRef Name="ID_RESPONSABLE" />
+          </Key>
+          <Property Name="ID_RESPONSABLE" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DESCRIPCION" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+          <Property Name="USUARIO_CREACION" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="USUARIO_MODIFICACION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CONTACTOes" Relationship="GESTIONPModel.FK_RESPONSABLE" FromRole="RESPONSABLE" ToRole="CONTACTO" />
+        </EntityType>
+        <EntityType Name="VISITA">
+          <Key>
+            <PropertyRef Name="ID_VISITA" />
+          </Key>
+          <Property Name="ID_VISITA" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_CLIENTE" Type="Int32" Nullable="false" />
+          <Property Name="ID_EMPLEADO" Type="Int32" Nullable="false" />
+          <Property Name="ASUNTO" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DESCRIPCION" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ID_ESTADO" Type="Int32" Nullable="false" />
+          <Property Name="FECHA_INICIO" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FECHA_FIN" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ID_EVENT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+          <Property Name="USUARIO_CREACION" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="USUARIO_MODIFICACION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CLIENTE" Relationship="GESTIONPModel.FK_VISITA_CLIENTE" FromRole="VISITA" ToRole="CLIENTE" />
+          <NavigationProperty Name="EMPLEADO" Relationship="GESTIONPModel.FK_VISITA_EMPLEADO" FromRole="VISITA" ToRole="EMPLEADO" />
+          <NavigationProperty Name="ESTADO" Relationship="GESTIONPModel.FK_VISITA_ESTADO" FromRole="VISITA" ToRole="ESTADO" />
+        </EntityType>
+        <Association Name="FK_EMPLEADO_CARGO">
+          <End Type="GESTIONPModel.CARGO" Role="CARGO" Multiplicity="1" />
+          <End Type="GESTIONPModel.EMPLEADO" Role="EMPLEADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARGO">
+              <PropertyRef Name="ID_CARGO" />
+            </Principal>
+            <Dependent Role="EMPLEADO">
+              <PropertyRef Name="ID_CARGO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROYECTO_CLIENTE">
+          <End Type="GESTIONPModel.CLIENTE" Role="CLIENTE" Multiplicity="1" />
+          <End Type="GESTIONPModel.PROYECTO" Role="PROYECTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Principal>
+            <Dependent Role="PROYECTO">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VISITA_CLIENTE">
+          <End Type="GESTIONPModel.CLIENTE" Role="CLIENTE" Multiplicity="1" />
+          <End Type="GESTIONPModel.VISITA" Role="VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Principal>
+            <Dependent Role="VISITA">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VISITA_EMPLEADO">
+          <End Type="GESTIONPModel.EMPLEADO" Role="EMPLEADO" Multiplicity="1" />
+          <End Type="GESTIONPModel.VISITA" Role="VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="ID_EMPLEADO" />
+            </Principal>
+            <Dependent Role="VISITA">
+              <PropertyRef Name="ID_EMPLEADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VISITA_ESTADO">
+          <End Type="GESTIONPModel.ESTADO" Role="ESTADO" Multiplicity="1" />
+          <End Type="GESTIONPModel.VISITA" Role="VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ESTADO">
+              <PropertyRef Name="ID_ESTADO" />
+            </Principal>
+            <Dependent Role="VISITA">
+              <PropertyRef Name="ID_ESTADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CONTACTO">
+          <Key>
+            <PropertyRef Name="ID_CONTACTO" />
+          </Key>
+          <Property Name="ID_CONTACTO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBRES" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="APELLIDOS" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="TELF1" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="TELF2" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="EXT" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="EMAIL1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="EMAIL2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+          <Property Name="ID_CLIENTE" Type="Int32" Nullable="false" />
+          <Property Name="ID_RESPONSABLE" Type="Int32" Nullable="false" />
+          <Property Name="USUARIO_CREACION" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="USUARIO_MODIFICACION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CLIENTE" Relationship="GESTIONPModel.FK_CONTACTO" FromRole="CONTACTO" ToRole="CLIENTE" />
+          <NavigationProperty Name="RESPONSABLE" Relationship="GESTIONPModel.FK_RESPONSABLE" FromRole="CONTACTO" ToRole="RESPONSABLE" />
+        </EntityType>
+        <Association Name="FK_CONTACTO">
+          <End Type="GESTIONPModel.CLIENTE" Role="CLIENTE" Multiplicity="1" />
+          <End Type="GESTIONPModel.CONTACTO" Role="CONTACTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Principal>
+            <Dependent Role="CONTACTO">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESPONSABLE">
+          <End Type="GESTIONPModel.RESPONSABLE" Role="RESPONSABLE" Multiplicity="1" />
+          <End Type="GESTIONPModel.CONTACTO" Role="CONTACTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RESPONSABLE">
+              <PropertyRef Name="ID_RESPONSABLE" />
+            </Principal>
+            <Dependent Role="CONTACTO">
+              <PropertyRef Name="ID_RESPONSABLE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Discriminator" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="SpListadoUsuarioDetail_Result">
+          <Property Type="String" Name="Name" Nullable="true" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="rol" Nullable="false" MaxLength="256" />
+        </ComplexType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ID_EMPELADO" Type="Int32" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GESTIONPModelStoreContainer" CdmEntityContainer="GESTIONP_CSEntities">
+          <FunctionImportMapping FunctionImportName="SpListadoVistasCS" FunctionName="GESTIONPModel.Store.SpListadoVistasCS">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GESTIONPModel.SpListadoVistasCS_Result">
+                <ScalarProperty Name="ID_VISITA" ColumnName="ID_VISITA" />
+                <ScalarProperty Name="ID_CLIENTE" ColumnName="ID_CLIENTE" />
+                <ScalarProperty Name="CLIENTE" ColumnName="CLIENTE" />
+                <ScalarProperty Name="ID_EMPLEADO" ColumnName="ID_EMPLEADO" />
+                <ScalarProperty Name="NOMBRES" ColumnName="NOMBRES" />
+                <ScalarProperty Name="APELLIDOS" ColumnName="APELLIDOS" />
+                <ScalarProperty Name="ASUNTO" ColumnName="ASUNTO" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="FECHA_INICIO" ColumnName="FECHA_INICIO" />
+                <ScalarProperty Name="FECHA_FIN" ColumnName="FECHA_FIN" />
+                <ScalarProperty Name="ID_ESTADO" ColumnName="ID_ESTADO" />
+                <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+                <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+                <ScalarProperty Name="COLOR" ColumnName="COLOR" />
+                <ScalarProperty Name="ID_CALENDAR" ColumnName="ID_CALENDAR" />
+                <ScalarProperty Name="ID_EVENT" ColumnName="ID_EVENT" />
+                <ScalarProperty Name="EMPLEADO" ColumnName="EMPLEADO" />
+                <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="CARGOes">
+            <EntityTypeMapping TypeName="GESTIONPModel.CARGO">
+              <MappingFragment StoreEntitySet="CARGO">
+                <ScalarProperty Name="FECHA_MODIFICACION" ColumnName="FECHA_MODIFICACION" />
+                <ScalarProperty Name="USUARIO_MODIFICACION" ColumnName="USUARIO_MODIFICACION" />
+                <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
+                <ScalarProperty Name="USUARIO_CREACION" ColumnName="USUARIO_CREACION" />
+                <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="ID_CARGO" ColumnName="ID_CARGO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CATALOGO_ACTIVIDAD">
+            <EntityTypeMapping TypeName="GESTIONPModel.CATALOGO_ACTIVIDAD">
+              <MappingFragment StoreEntitySet="CATALOGO_ACTIVIDAD">
+                <ScalarProperty Name="FECHA_MODIFICACION" ColumnName="FECHA_MODIFICACION" />
+                <ScalarProperty Name="USUARIO_MODIFICACION" ColumnName="USUARIO_MODIFICACION" />
+                <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
+                <ScalarProperty Name="USUARIO_CREACION" ColumnName="USUARIO_CREACION" />
+                <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+                <ScalarProperty Name="COMPLEJIDAD" ColumnName="COMPLEJIDAD" />
+                <ScalarProperty Name="CANT_MAX_HORA" ColumnName="CANT_MAX_HORA" />
+                <ScalarProperty Name="CANT_MIN_HORA" ColumnName="CANT_MIN_HORA" />
+                <ScalarProperty Name="ID_ACTIVIDAD_PADRE" ColumnName="ID_ACTIVIDAD_PADRE" />
+                <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="ID_ACTIVIDAD" ColumnName="ID_ACTIVIDAD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CLIENTEs">
+            <EntityTypeMapping TypeName="GESTIONPModel.CLIENTE">
+              <MappingFragment StoreEntitySet="CLIENTE">
+                <ScalarProperty Name="FECHA_MODIFICACION" ColumnName="FECHA_MODIFICACION" />
+                <ScalarProperty Name="USUARIO_MODIFICACION" ColumnName="USUARIO_MODIFICACION" />
+                <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
+                <ScalarProperty Name="USUARIO_CREACION" ColumnName="USUARIO_CREACION" />
+                <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
+                <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+                <ScalarProperty Name="CLIENTE1" ColumnName="CLIENTE" />
+                <ScalarProperty Name="COD_CLIENTE" ColumnName="COD_CLIENTE" />
+                <ScalarProperty Name="ID_CLIENTE" ColumnName="ID_CLIENTE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMPLEADOes">
+            <EntityTypeMapping TypeName="GESTIONPModel.EMPLEADO">
+              <MappingFragment StoreEntitySet="EMPLEADO">
+                <ScalarProperty Name="FECHA_MODIFICACION" ColumnName="FECHA_MODIFICACION" />
+                <ScalarProperty Name="USUARIO_MODIFICACION" ColumnName="USUARIO_MODIFICACION" />
+                <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
+                <ScalarProperty Name="USUARIO_CREACION" ColumnName="USUARIO_CREACION" />
+                <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+                <ScalarProperty Name="ID_CALENDAR" ColumnName="ID_CALENDAR" />
+                <ScalarProperty Name="EMAIL2" ColumnName="EMAIL2" />
+                <ScalarProperty Name="EMAIL1" ColumnName="EMAIL1" />
+                <ScalarProperty Name="TELEF2" ColumnName="TELEF2" />
+                <ScalarProperty Name="TELEF1" ColumnName="TELEF1" />
+                <ScalarProperty Name="COLOR" ColumnName="COLOR" />
+                <ScalarProperty Name="IDENTIDAD" ColumnName="IDENTIDAD" />
+                <ScalarProperty Name="APELLIDOS" ColumnName="APELLIDOS" />
+                <ScalarProperty Name="NOMBRES" ColumnName="NOMBRES" />
+                <ScalarProperty Name="ID_CARGO" ColumnName="ID_CARGO" />
+                <ScalarProperty Name="ID_EMPLEADO" ColumnName="ID_EMPLEADO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ESTADOes">
+            <EntityTypeMapping TypeName="GESTIONPModel.ESTADO">
+              <MappingFragment StoreEntitySet="ESTADO">
+                <ScalarProperty Name="FECHA_MODIFICACION" ColumnName="FECHA_MODIFICACION" />
+                <ScalarProperty Name="USUARIO_MODIFICACION" ColumnName="USUARIO_MODIFICACION" />
+                <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
+                <ScalarProperty Name="USUARIO_CREACION" ColumnName="USUARIO_CREACION" />
+                <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="ID_ESTADO" ColumnName="ID_ESTADO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PROYECTOes">
+            <EntityTypeMapping TypeName="GESTIONPModel.PROYECTO">
+              <MappingFragment StoreEntitySet="PROYECTO">
+                <ScalarProperty Name="FECHA_MODIFICACION" ColumnName="FECHA_MODIFICACION" />
+                <ScalarProperty Name="USUARIO_MODIFICACION" ColumnName="USUARIO_MODIFICACION" />
+                <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
+                <ScalarProperty Name="USUARIO_CREACION" ColumnName="USUARIO_CREACION" />
+                <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+                <ScalarProperty Name="OBSERVACION" ColumnName="OBSERVACION" />
+                <ScalarProperty Name="EMPLEADO_RESPONSABLE" ColumnName="EMPLEADO_RESPONSABLE" />
+                <ScalarProperty Name="LATITUD" ColumnName="LATITUD" />
+                <ScalarProperty Name="LONGITUD" ColumnName="LONGITUD" />
+                <ScalarProperty Name="FECHA_FIN" ColumnName="FECHA_FIN" />
+                <ScalarProperty Name="FECHA_INICIO" ColumnName="FECHA_INICIO" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="ID_CLIENTE" ColumnName="ID_CLIENTE" />
+                <ScalarProperty Name="ID_PROYECTO" ColumnName="ID_PROYECTO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RESPONSABLEs">
+            <EntityTypeMapping TypeName="GESTIONPModel.RESPONSABLE">
+              <MappingFragment StoreEntitySet="RESPONSABLE">
+                <ScalarProperty Name="FECHA_MODIFICACION" ColumnName="FECHA_MODIFICACION" />
+                <ScalarProperty Name="USUARIO_MODIFICACION" ColumnName="USUARIO_MODIFICACION" />
+                <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
+                <ScalarProperty Name="USUARIO_CREACION" ColumnName="USUARIO_CREACION" />
+                <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="ID_RESPONSABLE" ColumnName="ID_RESPONSABLE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VISITAs">
+            <EntityTypeMapping TypeName="GESTIONPModel.VISITA">
+              <MappingFragment StoreEntitySet="VISITA">
+                <ScalarProperty Name="FECHA_MODIFICACION" ColumnName="FECHA_MODIFICACION" />
+                <ScalarProperty Name="USUARIO_MODIFICACION" ColumnName="USUARIO_MODIFICACION" />
+                <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
+                <ScalarProperty Name="USUARIO_CREACION" ColumnName="USUARIO_CREACION" />
+                <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+                <ScalarProperty Name="ID_EVENT" ColumnName="ID_EVENT" />
+                <ScalarProperty Name="FECHA_FIN" ColumnName="FECHA_FIN" />
+                <ScalarProperty Name="FECHA_INICIO" ColumnName="FECHA_INICIO" />
+                <ScalarProperty Name="ID_ESTADO" ColumnName="ID_ESTADO" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="ASUNTO" ColumnName="ASUNTO" />
+                <ScalarProperty Name="ID_EMPLEADO" ColumnName="ID_EMPLEADO" />
+                <ScalarProperty Name="ID_CLIENTE" ColumnName="ID_CLIENTE" />
+                <ScalarProperty Name="ID_VISITA" ColumnName="ID_VISITA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CONTACTOes">
+            <EntityTypeMapping TypeName="GESTIONPModel.CONTACTO">
+              <MappingFragment StoreEntitySet="CONTACTO">
+                <ScalarProperty Name="FECHA_MODIFICACION" ColumnName="FECHA_MODIFICACION" />
+                <ScalarProperty Name="USUARIO_MODIFICACION" ColumnName="USUARIO_MODIFICACION" />
+                <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
+                <ScalarProperty Name="USUARIO_CREACION" ColumnName="USUARIO_CREACION" />
+                <ScalarProperty Name="ID_RESPONSABLE" ColumnName="ID_RESPONSABLE" />
+                <ScalarProperty Name="ID_CLIENTE" ColumnName="ID_CLIENTE" />
+                <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+                <ScalarProperty Name="EMAIL2" ColumnName="EMAIL2" />
+                <ScalarProperty Name="EMAIL1" ColumnName="EMAIL1" />
+                <ScalarProperty Name="EXT" ColumnName="EXT" />
+                <ScalarProperty Name="TELF2" ColumnName="TELF2" />
+                <ScalarProperty Name="TELF1" ColumnName="TELF1" />
+                <ScalarProperty Name="APELLIDOS" ColumnName="APELLIDOS" />
+                <ScalarProperty Name="NOMBRES" ColumnName="NOMBRES" />
+                <ScalarProperty Name="ID_CONTACTO" ColumnName="ID_CONTACTO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="GESTIONPModel.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Discriminator" ColumnName="Discriminator" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SpListadoUsuarioDetail" FunctionName="GESTIONPModel.Store.SpListadoUsuarioDetail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GESTIONPModel.SpListadoUsuarioDetail_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="rol" ColumnName="rol" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="GESTIONPModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="ID_EMPELADO" ColumnName="ID_EMPELADO" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

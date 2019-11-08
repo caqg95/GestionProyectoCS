@@ -1,0 +1,1286 @@
+﻿@model IEnumerable<GestionProyectoCS.Models.Datos.VISITA>
+
+@{
+    ViewBag.Title = "Agenda";
+}
+<link href="~/Content/dx.common.css" rel="stylesheet" />
+<link href="~/Content/dx.light.css" rel="stylesheet" />
+<style>
+    /*.div.fc-popover.fc-more-popover {
+        overflow-y: scroll !important;
+        max-height: 50px !important;
+    }*/
+
+    .fc-event-container .fc-event {
+        color: #ffffff !important;
+        /*font-size: .95em !important;*/
+        /*font-weight:bold;*/
+        /*line-height: 1.3 !important;
+        border-radius: 4px !important;
+        border: 2px solid !important;*/
+    }
+</style>
+<div class="app-main">
+    @Html.Partial("_SideBar")
+    <div class="app-main__outer">
+        <div class="app-main__inner">
+            <div class="app-page-title">
+                <div class="page-title-wrapper">
+                    <div class="page-title-heading">
+                        <div class="page-title-icon">
+                            <i class="pe-7s-wristwatch icon-gradient bg-warm-flame">
+                            </i>
+                        </div>
+                        <div>
+                            Agenda
+                            <div class="page-title-subheading">
+                                Planificacion para la visita de los clientes
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <button type="button" class="btn mr-2 mb-2 btn-primary" id="btnmodal" style="display:none" data-toggle="modal" data-target="#myModalSave">
+                                Basic Modal
+                            </button>
+                            <button type="button" class="btn mr-2 mb-2 btn-primary" id="btnmodaldetail" style="display:none" data-toggle="modal" data-target="#myModal">
+                                Basic Modal
+                            </button>
+                            <div class="row" style="margin-bottom:10px">
+                                <div class="col-md-2">
+                                    <button onclick="AccessCalendar()" id="btnauthorize" class="btn btn-warning">Autorizar y Cargar</button>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <label class="col-md-4">Filtrar por Empleado:</label>
+                                        <div class="col-md-8">
+                                            <div id="FILTRO_EMPLEADO"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <label class="col-md-4">Filtrar por Cliente:</label>
+                                        <div class="col-md-8">
+                                            <div id="FILTRO_CLIENTE"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <label class="col-md-4">Filtrar por Estado:</label>
+                                        <div class="col-md-8">
+                                            <div id="FILTRO_ESTADO"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div id="calender" style="margin-bottom:10px"></div>
+                            @*<iframe src="https://calendar.google.com/calendar/embed?src=agenda.corpsoftsa%40gmail.com&ctz=America%2FManagua" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade show" tabindex="-1" role="dialog" id="myModal" aria-labelledby="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <button id="btnDelete" class="btn btn-default btn-sm pull-right">
+                    <span class="glyphicon glyphicon-remove"></span> Remover
+                </button>
+                <button id="btnEdit" class="btn btn-default btn-sm pull-right" style="margin-right:5px;">
+                    <span class="glyphicon glyphicon-pencil"></span> Editar
+                </button>
+                <p id="pDetails"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade show" tabindex="-1" role="dialog" id="myModalSave" aria-labelledby="myModalSave">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventTitle">Registrar Visita</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form class="col-md-12 form-horizontal">
+                    <input type="hidden" id="hdEventID" value="0" />
+                    <input type="hidden" id="txtcalendarid" value=" " />
+                    <input type="hidden" id="txteventid" value=" " />
+
+                    <div class="form-group" style="display:none">
+                        <fieldset disabled>
+                            <label>Asunto</label>
+                            <input type="text" id="txtSubject" class="form-control" />
+                        </fieldset>
+                    </div>
+                    <div class="row" style="margin-bottom:10px">
+                        <label class="col-md-2">Asunto:</label>
+                        <div class="col-md-10">
+                            <input type="text" id="ASUNTO" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row" style="margin-bottom:10px">
+                        <label class="col-md-2">Cliente:</label>
+                        <div class="col-md-10">
+                            <div id="CLIENTE"></div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-bottom:10px">
+                        <label class="col-md-2">Empleado:</label>
+                        <div class="col-md-10">
+                            <div id="EMPLEADO"></div>
+                        </div>
+                    </div>
+                    <div id="div_estado" class="row" style="margin-bottom:10px;display:none">
+                        <label class="col-md-2">Estado:</label>
+                        <div class="col-md-10">
+                            <div id="ESTADO"></div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-bottom:10px;">
+                        <label class="col-md-2">Fecha Inicio:</label>
+                        <div class="col-md-10">
+                            <div class="input-group date" id="dtp1"></div>
+                        </div>
+                    </div>
+                    <div class="row" id="divEndDate" style="margin-bottom:10px;">
+                        <label class="col-md-2">Fecha Fin:</label>
+                        <div class="col-md-10">
+                            <div class="input-group date" id="dtp2"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripcion:</label>
+                        <textarea id="txtDescription" rows="2" class="form-control"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSave" class="btn btn-success">Guardar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<link href="~/Content/fullcalendar.css" rel="stylesheet" />
+@section Scripts
+{
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="~/Scripts/dx.all.js"></script>
+    <script src="~/Scripts/cldr/jquery-ui.min.js"></script>
+    <script src="~/Scripts/cldr/moment.min.js"></script>
+    <script src="~/Scripts/fullcalendar.js"></script>
+    <script src="~/Scripts/locale-all.js"></script>
+    <script>
+        // Google api console clientID and apiKey
+
+        var clientId = '698476532720-bt6as1q81qm5enc9ch8s6rp8aelrfluk.apps.googleusercontent.com';
+        var apiKey = 'AIzaSyA0i88ra_cOV2wmWzpvdUW8N4QGli-ITHU';
+
+
+        // enter the scope of current project (this API must be turned on in the Google console)
+        var scopes = 'https://www.googleapis.com/auth/calendar';
+
+
+        var estadof = 0;
+        var empleadof = 0;
+        var clientef = 0;
+        var fechaCalendario = new Date();
+        $(document).ready(function () {
+            // handleClientLoad();
+            // checkAuth();
+            FetchEventAndRenderCalendar(empleadof, clientef, estadof);
+            $('#btnEdit').click(function () {
+                $('#div_estado').show();
+                //Open modal dialog for edit event
+                openAddEditForm();
+            })
+            $('#btnDelete').click(function () {
+                if (selectedEvent != null && confirm('Esta seguro de eliminar la visita?')) {
+                    try {
+                        return gapi.client.calendar.events.delete({
+                            "calendarId": selectedEvent.calendarID,
+                            "eventId": selectedEvent.eventGid
+                        })
+                            .then(function (response) {
+                                // Handle the results here (response.result has the parsed body).
+                                // console.log("Response", response);
+                                $.ajax({
+                                    type: "POST",
+                                    url: '/Agenda/DeleteEvent',
+                                    data: { 'eventID': selectedEvent.eventID },
+                                    success: function (data) {
+                                        if (data.status) {
+                                            //Refresh the calender
+                                            FetchEventAndRenderCalendar(empleadof, clientef, estadof);
+                                            $('#myModal').modal('hide');
+                                        }
+                                    },
+                                    error: function () {
+                                        alert('Failed');
+                                    }
+                                })
+                            },
+                                function (err) { alert("Execute error", err); });
+                    }
+                    catch (error) {
+                        alert('Por favor,Dar click al boton "Autorizar y Cargar"');
+                        FetchEventAndRenderCalendar(empleadof, clientef, estadof);
+                    }
+                }
+            })
+            $('#btnSave').click(function () {
+                //Validation/
+                var startDate;
+                var endDate;
+                if ($("#ASUNTO").val() == '') {
+                    alert('El asunto es requerido');
+                    return;
+                }
+                if ($("#CLIENTE").dxSelectBox('instance').option("value") == null) {
+                    alert('El CLIENTE es requerido');
+                    return;
+                }
+                if ($("#EMPLEADO").dxSelectBox('instance').option("value") == null) {
+                    alert('El empleado es requerido');
+                    return;
+                }
+                if ($("#dtp1").dxDateBox('instance').option("value") == null) {
+                    alert('La fecha de inicio es requerido');
+                    return;
+                }
+                if ($("#dtp2").dxDateBox('instance').option("value") == null) {
+                    alert('La fecha fin es requerido');
+                    return;
+                }
+                else {
+                    try {
+                        startDate = $("#dtp1").dxDateBox('instance').option("value")["_d"].toUTCString();
+                    }
+                    catch (err) {
+                        startDate = $("#dtp1").dxDateBox('instance').option("value").toUTCString();
+                    }
+                    try {
+                        endDate = $("#dtp2").dxDateBox('instance').option("value")["_d"].toUTCString();
+                    }
+                    catch (err) {
+                        endDate = $("#dtp2").dxDateBox('instance').option("value").toUTCString();
+                    }
+                    if (startDate > endDate) {
+                        alert('La fecha de inicio debe de ser menor a la feha fin');
+                        return;
+                    }
+                }
+
+                let cliente = $("#CLIENTE").dxSelectBox('instance').option("value");
+                let empleado = $("#EMPLEADO").dxSelectBox('instance').option("value");
+                let asunto = $('#ASUNTO').val().trim() + "-" + $("#CLIENTE").dxSelectBox('instance').option("displayValue");
+                $.ajax({
+                    type: "POST",
+                    url: '/Agenda/GetCalendarAddress',
+                    data: { cliente, empleado },
+                    success: function (data) {
+                        if (data.status) {
+                            try {
+                                if ($('#hdEventID').val() != 0) {
+
+                                    DeletEventGCalendar($('#txtcalendarid').val(), $('#txteventid').val());
+                                    var res = $('#ASUNTO').val().split("-");
+                                    asunto = res[0] + "-" + data.cliente;
+                                }
+                                let eventgoogle = {
+                                    "summary": asunto,
+                                    "location": data.address,
+                                    "description": $('#txtDescription').val(),
+                                    "start": {
+                                        "dateTime": moment(startDate),
+                                        "timeZone": "(GMT-06:00)"
+                                    },
+                                    "end": {
+                                        "dateTime": moment(endDate),
+                                        "timeZone": "(GMT-06:00)"
+                                    },
+                                    "reminders": {
+                                        "useDefault": false,
+                                        "overrides": [
+                                            {
+                                                "method": "email",
+                                                "minutes": 60
+                                            },
+                                            {
+                                                "method": "popup",
+                                                "minutes": 60
+                                            }
+                                        ]
+                                    }
+                                }
+                                return gapi.client.calendar.events.insert({
+                                    "calendarId": data.calendarid,
+                                    "resource": eventgoogle
+                                })
+                                    .then(function (response) {
+                                        // Handle the results here (response.result has the parsed body).
+                                        var idevent = response.result.id;
+                                        var data = {
+                                            ID_VISITA: $('#hdEventID').val(),
+                                            ASUNTO: $('#ASUNTO').val().trim(),
+                                            ID_EMPLEADO: $("#EMPLEADO").dxSelectBox('instance').option("value"),
+                                            ID_CLIENTE: $("#CLIENTE").dxSelectBox('instance').option("value"),
+                                            ID_ESTADO: $("#ESTADO").dxSelectBox('instance').option("value"),
+                                            FECHA_INICIO: startDate,
+                                            FECHA_FIN: endDate,
+                                            DESCRIPCION: $('#txtDescription').val(),
+                                            ID_EVENT: idevent
+                                        }
+
+                                        SaveEvent(data);
+                                    },
+                                        function (err) { alert("Execute error", err); });
+                            }
+                            catch (error) {
+                                alert('Por favor,Dar click al boton "Autorizar y Cargar"');
+                            }
+                        }
+                    },
+                    error: function () {
+                        alert('Failed');
+                        alert('Por favor,Dar click al boton "Autorizar y Cargar"');
+                    }
+                })
+                // call function for submit data to the server
+            })
+            $("#dtp1,#dtp2").dxDateBox({
+                type: "datetime",
+                timeFormat: 'DD/MM/YYYY HH:mm',
+                pickerType: "list",
+                interval: 30,
+                showClearButton: true
+            });
+            SelectEmpleados();
+            SelectClientes();
+            SelectEstado();
+            SelectFiltroEmpleado();
+            SelectFiltroCliente();
+            SelectFiltroEstado();
+            //AccessCalendar();
+            // $("#btnauthorize").click();
+        })
+        function FetchEventAndRenderCalendar(filtro_empleado, filtro_cliente, filtro_estado) {
+            events = [];
+            if (filtro_empleado == 0 && filtro_cliente == 0 && filtro_estado == 0) {
+                $.ajax({
+                    type: "GET",
+                    url: "/Agenda/GetEventsAll",
+                    success: function (data) {
+                        $.each(data, function (i, v) {
+                            events.push({
+                                eventID: v.ID_VISITA,
+                                clienteID: v.ID_CLIENTE,
+                                cliente: v.CLIENTE,
+                                empleadoID: v.ID_EMPLEADO,
+                                empleado: v.EMPLEADO,
+                                estadoID: v.ESTADOID,
+                                estado: v.ESTADO,
+                                title: v.ASUNTO,
+                                description: v.DESCRIPCION,
+                                start: moment(v.Start),
+                                end: v.End != null ? moment(v.End) : null,
+                                color: v.COLOR,
+                                calendarID: v.ID_CALENDAR,
+                                eventGid: v.ID_EVENT
+                            });
+                        })
+                        GenerateCalender(events);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        alert(error);
+                    }
+                })
+            }
+            else {
+                if (filtro_empleado != 0 && filtro_cliente != 0 && filtro_estado != 0) {
+                    var data = JSON.stringify({
+                        'empleado': filtro_empleado,
+                        'cliente': filtro_cliente,
+                        'estado': filtro_estado,
+                    });
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json",
+                        url: "/Agenda/GetEventsEmpleadoClienteEstado",
+                        data: data,
+                        success: function (data) {
+                            $.each(data, function (i, v) {
+                                events.push({
+                                    eventID: v.ID_VISITA,
+                                    clienteID: v.ID_CLIENTE,
+                                    cliente: v.CLIENTE,
+                                    empleadoID: v.ID_EMPLEADO,
+                                    empleado: v.EMPLEADO,
+                                    estadoID: v.ESTADOID,
+                                    estado: v.ESTADO,
+                                    title: v.ASUNTO,
+                                    description: v.DESCRIPCION,
+                                    start: moment(v.Start),
+                                    end: v.End != null ? moment(v.End) : null,
+                                    color: v.COLOR,
+                                    calendarID: v.ID_CALENDAR,
+                                    eventGid: v.ID_EVENT
+                                });
+                            })
+                            GenerateCalender(events);
+                        },
+                        error: function (error) {
+                            console.log(error);
+                            alert(error);
+                        }
+                    })
+                }
+                else {
+                    if (filtro_empleado != 0 && filtro_cliente == 0 && filtro_estado == 0) {
+                        var data = JSON.stringify({
+                            'empleado': filtro_empleado
+                        });
+                        $.ajax({
+                            type: "POST",
+                            contentType: "application/json",
+                            url: "/Agenda/GetEventsEmpleado",
+                            data: data,
+                            success: function (data) {
+                                $.each(data, function (i, v) {
+                                    events.push({
+                                        eventID: v.ID_VISITA,
+                                        clienteID: v.ID_CLIENTE,
+                                        cliente: v.CLIENTE,
+                                        empleadoID: v.ID_EMPLEADO,
+                                        empleado: v.EMPLEADO,
+                                        estadoID: v.ESTADOID,
+                                        estado: v.ESTADO,
+                                        title: v.ASUNTO,
+                                        description: v.DESCRIPCION,
+                                        start: moment(v.Start),
+                                        end: v.End != null ? moment(v.End) : null,
+                                        color: v.COLOR,
+                                        calendarID: v.ID_CALENDAR,
+                                        eventGid: v.ID_EVENT
+                                    });
+                                })
+                                GenerateCalender(events);
+                            },
+                            error: function (error) {
+                                console.log(error);
+                                alert(error);
+                            }
+                        })
+                    }
+                    else {
+                        if (filtro_empleado == 0 && filtro_cliente != 0 && filtro_estado == 0) {
+                            var data = JSON.stringify({
+                                'cliente': filtro_cliente
+                            });
+                            $.ajax({
+                                type: "POST",
+                                contentType: "application/json",
+                                url: "/Agenda/GetEventsCliente",
+                                data: data,
+                                success: function (data) {
+                                    $.each(data, function (i, v) {
+                                        events.push({
+                                            eventID: v.ID_VISITA,
+                                            clienteID: v.ID_CLIENTE,
+                                            cliente: v.CLIENTE,
+                                            empleadoID: v.ID_EMPLEADO,
+                                            empleado: v.EMPLEADO,
+                                            estadoID: v.ESTADOID,
+                                            estado: v.ESTADO,
+                                            title: v.ASUNTO,
+                                            description: v.DESCRIPCION,
+                                            start: moment(v.Start),
+                                            end: v.End != null ? moment(v.End) : null,
+                                            color: v.COLOR,
+                                            calendarID: v.ID_CALENDAR,
+                                            eventGid: v.ID_EVENT
+                                        });
+                                    })
+                                    GenerateCalender(events);
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                    alert(error);
+                                }
+                            })
+                        }
+                        else {
+                            if (filtro_empleado == 0 && filtro_cliente == 0 && filtro_estado != 0) {
+
+                                var data = JSON.stringify({
+                                    'estado': filtro_estado
+                                });
+                                $.ajax({
+                                    type: "POST",
+                                    contentType: "application/json",
+                                    url: "/Agenda/GetEventsEstado",
+                                    data: data,
+                                    success: function (data) {
+                                        $.each(data, function (i, v) {
+                                            events.push({
+                                                eventID: v.ID_VISITA,
+                                                clienteID: v.ID_CLIENTE,
+                                                cliente: v.CLIENTE,
+                                                empleadoID: v.ID_EMPLEADO,
+                                                empleado: v.EMPLEADO,
+                                                estadoID: v.ESTADOID,
+                                                estado: v.ESTADO,
+                                                title: v.ASUNTO,
+                                                description: v.DESCRIPCION,
+                                                start: moment(v.Start),
+                                                end: v.End != null ? moment(v.End) : null,
+                                                color: v.COLOR,
+                                                calendarID: v.ID_CALENDAR,
+                                                eventGid: v.ID_EVENT
+                                            });
+                                        })
+                                        GenerateCalender(events);
+                                    },
+                                    error: function (error) {
+                                        console.log(error);
+                                        alert(error);
+                                    }
+                                })
+                            }
+                            else {
+                                if (filtro_empleado != 0 && filtro_cliente != 0 && filtro_estado == 0) {
+                                    var data = JSON.stringify({
+                                        'empleado': filtro_empleado,
+                                        'cliente': filtro_cliente
+                                    });
+                                    $.ajax({
+                                        type: "POST",
+                                        contentType: "application/json",
+                                        url: "/Agenda/GetEventsEmpleadoCliente",
+                                        data: data,
+                                        success: function (data) {
+                                            $.each(data, function (i, v) {
+                                                events.push({
+                                                    eventID: v.ID_VISITA,
+                                                    clienteID: v.ID_CLIENTE,
+                                                    cliente: v.CLIENTE,
+                                                    empleadoID: v.ID_EMPLEADO,
+                                                    empleado: v.EMPLEADO,
+                                                    estadoID: v.ESTADOID,
+                                                    estado: v.ESTADO,
+                                                    title: v.ASUNTO,
+                                                    description: v.DESCRIPCION,
+                                                    start: moment(v.Start),
+                                                    end: v.End != null ? moment(v.End) : null,
+                                                    color: v.COLOR,
+                                                    calendarID: v.ID_CALENDAR,
+                                                    eventGid: v.ID_EVENT
+                                                });
+                                            })
+                                            GenerateCalender(events);
+                                        },
+                                        error: function (error) {
+                                            console.log(error);
+                                            alert(error);
+                                        }
+                                    })
+                                }
+                                else {
+                                    if (filtro_empleado == 0 && filtro_cliente != 0 && filtro_estado != 0) {
+                                        var data = JSON.stringify({
+                                            'cliente': filtro_cliente,
+                                            'estado': filtro_estado
+                                        });
+                                        $.ajax({
+                                            type: "POST",
+                                            contentType: "application/json",
+                                            url: "/Agenda/GetEventsClienteEstado",
+                                            data: data,
+                                            success: function (data) {
+                                                $.each(data, function (i, v) {
+                                                    events.push({
+                                                        eventID: v.ID_VISITA,
+                                                        clienteID: v.ID_CLIENTE,
+                                                        cliente: v.CLIENTE,
+                                                        empleadoID: v.ID_EMPLEADO,
+                                                        empleado: v.EMPLEADO,
+                                                        estadoID: v.ESTADOID,
+                                                        estado: v.ESTADO,
+                                                        title: v.ASUNTO,
+                                                        description: v.DESCRIPCION,
+                                                        start: moment(v.Start),
+                                                        end: v.End != null ? moment(v.End) : null,
+                                                        color: v.COLOR,
+                                                        calendarID: v.ID_CALENDAR,
+                                                        eventGid: v.ID_EVENT
+                                                    });
+                                                })
+                                                GenerateCalender(events);
+                                            },
+                                            error: function (error) {
+                                                console.log(error);
+                                                alert(error);
+                                            }
+                                        })
+                                    }
+                                    else {
+                                        if (filtro_empleado != 0 && filtro_cliente == 0 && filtro_estado != 0) {
+                                            var data = JSON.stringify({
+                                                'empleado': filtro_empleado,
+                                                'estado': filtro_estado
+                                            });
+                                            $.ajax({
+                                                type: "POST",
+                                                contentType: "application/json",
+                                                url: "/Agenda/GetEventsEmpleadoEstado",
+                                                data: data,
+                                                success: function (data) {
+                                                    $.each(data, function (i, v) {
+                                                        events.push({
+                                                            eventID: v.ID_VISITA,
+                                                            clienteID: v.ID_CLIENTE,
+                                                            cliente: v.CLIENTE,
+                                                            empleadoID: v.ID_EMPLEADO,
+                                                            empleado: v.EMPLEADO,
+                                                            estadoID: v.ESTADOID,
+                                                            estado: v.ESTADO,
+                                                            title: v.ASUNTO,
+                                                            description: v.DESCRIPCION,
+                                                            start: moment(v.Start),
+                                                            end: v.End != null ? moment(v.End) : null,
+                                                            color: v.COLOR,
+                                                            calendarID: v.ID_CALENDAR,
+                                                            eventGid: v.ID_EVENT
+                                                        });
+                                                    })
+                                                    GenerateCalender(events);
+                                                },
+                                                error: function (error) {
+                                                    console.log(error);
+                                                    alert(error);
+                                                }
+                                            })
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        function GenerateCalender(events) {
+            $('#calender').fullCalendar('destroy');
+            $('#calender').fullCalendar({
+                locale: 'es',
+                weekNumbers: true,
+                contentHeight: 700,
+                defaultView: 'agendaWeek',
+                defaultDate: fechaCalendario,
+                timeZone: 'UTC',
+                timeFormat: 'h(:mm)a',
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'agendaWeek,month,basicDay,listWeek'
+                },
+                businessHours: {
+                    // days of week. an array of zero-based day of week integers (0=Sunday)
+                    dow: [1, 2, 3, 4, 5, 6], // Monday - Thursday
+
+                    start: '07:00', // a start time (07am in this example)
+                    end: '19:00', // an end time (7pm in this example)
+                },
+                navLinks: true,
+                eventLimit: true,
+                eventColor: '#378006',
+                events: events,
+                eventClick: function (calEvent, jsEvent, view) {
+                    console.log(calEvent);
+                    selectedEvent = calEvent;
+                    $('#myModal #eventTitle').text(calEvent.title);
+                    fechaCalendario = calEvent.start;
+                    var $description = $('<div/>');
+                    $description.append($('<p/>').html('<b>Cliente:</b>' + calEvent.cliente));
+                    $description.append($('<p/>').html('<b>Empleado:</b>' + calEvent.empleado));
+                    $description.append($('<p/>').html('<b>Estado:</b>' + calEvent.estado));
+                    $description.append($('<p/>').html('<b>Fecha Inicio:</b>' + calEvent.start.format("DD-MMM-YYYY HH:mm")));
+                    if (calEvent.end != null) {
+                        $description.append($('<p/>').html('<b>Fecha Fin:</b>' + calEvent.end.format("DD-MMM-YYYY HH:mm")));
+                    }
+                    $description.append($('<p/>').html('<b>Observaciones:</b>' + calEvent.description));
+                    $('#myModal #pDetails').empty().html($description);
+                    $('#myModal').modal();
+                },
+                selectable: true,
+                select: function (start, end) {
+                    fechaCalendario = start;
+                    var fecha_inicio = new Date(start.format('MM/DD/YYYY HH:mm'));
+                    var fecha_fin = new Date(end.format('MM/DD/YYYY HH:mm'));
+                    if (fecha_inicio.getDay() != 0) {
+                        var hora_inicio = fecha_inicio.getHours();
+                        var hora_fin = fecha_fin.getHours();
+                        if (((hora_inicio >= 7 && hora_inicio <= 18) && hora_fin <= 19) || hora_inicio == 0) {
+                            selectedEvent = {
+                                eventID: 0,
+                                title: '',
+                                description: '',
+                                start: fecha_inicio,
+                                end: fecha_fin,
+                                allDay: false,
+                                color: ''
+                            };
+                            openAddEditForm();
+                            $('#calendar').fullCalendar('unselect');
+                        }
+                        else {
+                            alert("Estimado usuario,Solo se puede agregar cita en horario de trabajo");
+                        }
+                    }
+                    else {
+                        alert("Estimado usuario,Solo se puede agregar cita en horario de trabajo");
+                    }
+                    $('#div_estado').hide();
+                },
+                editable: true,
+                eventDrop: function (event) {
+                    fechaCalendario = event.start;
+                    var fecha_inicio = new Date(event.start.format('MM/DD/YYYY HH:mm'));
+                    var fecha_fin = new Date(event.end.format('MM/DD/YYYY HH:mm'));
+                    if (fecha_inicio.getDay() != 0) {
+                        var hora_inicio = fecha_inicio.getHours();
+                        var hora_fin = fecha_fin.getHours();
+                        if ((hora_inicio >= 7 && hora_inicio <= 18) && hora_fin <= 19) {
+                            let cliente = event.clienteID;
+                            let empleado = event.empleadoID;
+                            $.ajax({
+                                type: "POST",
+                                url: '/Agenda/GetCalendarAddress',
+                                data: { cliente, empleado },
+                                success: function (data) {
+                                    if (data.status) {
+                                        var res = event.title.split("-");
+                                        let eventgoogle = {
+                                            "summary": res[0] + "-" + data.cliente,
+                                            "location": data.address,
+                                            "description": event.description,
+                                            "start": {
+                                                "dateTime": moment(event.start),
+                                                "timeZone": "(GMT-06:00)"
+                                            },
+                                            "end": {
+                                                "dateTime": moment(event.end),
+                                                "timeZone": "(GMT-06:00)"
+                                            },
+                                            "reminders": {
+                                                "useDefault": false,
+                                                "overrides": [
+                                                    {
+                                                        "method": "email",
+                                                        "minutes": 60
+                                                    },
+                                                    {
+                                                        "method": "popup",
+                                                        "minutes": 60
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                        try {
+                                            return gapi.client.calendar.events.insert({
+                                                "calendarId": data.calendarid,
+                                                "resource": eventgoogle
+                                            })
+                                                .then(function (response) {
+                                                    // Handle the results here (response.result has the parsed body).
+                                                    var idevent = response.result.id;
+                                                    var data = {
+                                                        ID_VISITA: event.eventID,
+                                                        ASUNTO: event.title,
+                                                        ID_CLIENTE: event.clienteID,
+                                                        ID_EMPLEADO: event.empleadoID,
+                                                        ID_ESTADO: event.estadoID,
+                                                        FECHA_INICIO: event.start.format('DD/MM/YYYY HH:mm'),
+                                                        FECHA_FIN: event.end.format('DD/MM/YYYY HH:mm'),
+                                                        DESCRIPCION: event.description,
+                                                        ID_EVENT: idevent
+                                                    };
+                                                    DeletEventGCalendar(event.calendarID, event.eventGid);
+                                                    SaveEvent(data);
+                                                },
+                                                    function (err) { alert("Execute error", err); });
+                                        }
+                                        catch (error) {
+                                            alert('Por favor,Dar click al boton "Autorizar y Cargar"');
+                                            console.log(error);
+                                            FetchEventAndRenderCalendar(empleadof, clientef, estadof);
+                                        }
+                                    }
+                                },
+                                error: function () {
+                                    alert('Failed');
+                                }
+                            })
+                            //SaveEvent(data);
+                        }
+                        else {
+                            alert("Estimado usuario,Solo se puede mover la cita en horario de trabajo");
+                            FetchEventAndRenderCalendar(empleadof, clientef, estadof);
+                        }
+                    }
+                    else {
+                        alert("Estimado usuario,Solo se puede mover la cita en horario de trabajo");
+                        FetchEventAndRenderCalendar(empleadof, clientef, estadof);
+                    }
+                },
+                eventResize: function (event) {
+                    // fechaCalendario = fecha_inicio;
+                    var fecha_inicio = new Date(event.start.format('MM/DD/YYYY HH:mm'));
+                    var fecha_fin = new Date(event.end.format('MM/DD/YYYY HH:mm'));
+                    if (event.start.format('MM/DD/YYYY') == event.end.format('MM/DD/YYYY')) {
+                        var hora_inicio = fecha_inicio.getHours();
+                        var hora_fin = fecha_fin.getHours();
+                        if ((hora_inicio >= 7 && hora_inicio <= 18) && hora_fin <= 19) {
+                            if (event != null && confirm('Esta seguro de extender la cita?')) {
+                                fechaCalendario = event.start;
+                                let cliente = event.clienteID;
+                                let empleado = event.empleadoID;
+                                $.ajax({
+                                    type: "POST",
+                                    url: '/Agenda/GetCalendarAddress',
+                                    data: { cliente, empleado },
+                                    success: function (data) {
+                                        if (data.status) {
+                                            var res = event.title.split("-");
+                                            let eventgoogle = {
+                                                "summary": res[0] + "-" + data.cliente,
+                                                "location": data.address,
+                                                "description": event.description,
+                                                "start": {
+                                                    "dateTime": moment(event.start),
+                                                    "timeZone": "(GMT-06:00)"
+                                                },
+                                                "end": {
+                                                    "dateTime": moment(event.end),
+                                                    "timeZone": "(GMT-06:00)"
+                                                },
+                                                "reminders": {
+                                                    "useDefault": false,
+                                                    "overrides": [
+                                                        {
+                                                            "method": "email",
+                                                            "minutes": 60
+                                                        },
+                                                        {
+                                                            "method": "popup",
+                                                            "minutes": 60
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                            try {
+                                                return gapi.client.calendar.events.insert({
+                                                    "calendarId": data.calendarid,
+                                                    "resource": eventgoogle
+                                                })
+                                                    .then(function (response) {
+                                                        // Handle the results here (response.result has the parsed body).
+                                                        var idevent = response.result.id;
+                                                        var data = {
+                                                            ID_VISITA: event.eventID,
+                                                            ASUNTO: event.title,
+                                                            ID_CLIENTE: event.clienteID,
+                                                            ID_EMPLEADO: event.empleadoID,
+                                                            ID_ESTADO: event.estadoID,
+                                                            FECHA_INICIO: event.start.format('DD/MM/YYYY HH:mm'),
+                                                            FECHA_FIN: event.end.format('DD/MM/YYYY HH:mm'),
+                                                            DESCRIPCION: event.description,
+                                                            ID_EVENT: idevent
+                                                        };
+                                                        DeletEventGCalendar(event.calendarID, event.eventGid);
+                                                        SaveEvent(data);
+                                                    },
+                                                        function (err) { alert("Execute error", err); });
+                                            }
+                                            catch (error) {
+                                                alert('Por favor,Dar click al boton "Autorizar y Cargar"');
+                                                console.log(error);
+                                                FetchEventAndRenderCalendar(empleadof, clientef, estadof);
+                                            }
+                                        }
+                                    },
+                                    error: function () {
+                                        alert('Failed');
+                                        console.log(error);
+                                        FetchEventAndRenderCalendar(empleadof, clientef, estadof);
+                                    }
+                                })
+
+                                //var data = {
+                                //    ID_VISITA: event.eventID,
+                                //    ASUNTO: event.title,
+                                //    ID_CLIENTE: event.clienteID,
+                                //    ID_EMPLEADO: event.empleadoID,
+                                //    ID_ESTADO: event.estadoID,
+                                //    FECHA_INICIO: event.start.format('DD/MM/YYYY HH:mm:ss'),
+                                //    FECHA_FIN: event.end.format('DD/MM/YYYY HH:mm:ss'),
+                                //    DESCRIPCION: event.description
+                                //};
+                                //SaveEvent(data);
+                            }
+                            else {
+                                FetchEventAndRenderCalendar(empleadof, clientef, estadof);
+                            }
+                        }
+                        else {
+                            alert("Estimado usuario,Solo se puede mover la cita en horarios de trabajo");
+                            FetchEventAndRenderCalendar(empleadof, clientef, estadof);
+                        }
+                    }
+                    else {
+                        alert("Estimado usuario,Solo se puede redimensionar la cita dentro del mismo dia");
+                        FetchEventAndRenderCalendar(empleadof, clientef, estadof);
+                    }
+
+                }
+            })
+        }
+        function openAddEditForm() {
+            if (selectedEvent != null) {
+                // console.log(selectedEvent);
+                fechaCalendario = selectedEvent.start;
+                $('#hdEventID').val(selectedEvent.eventID);
+                $('#ASUNTO').val(selectedEvent.title);
+
+                $("#CLIENTE").dxSelectBox('instance').option("value", selectedEvent.clienteID);
+                $("#EMPLEADO").dxSelectBox('instance').option("value", selectedEvent.empleadoID);
+                $("#ESTADO").dxSelectBox('instance').option("value", selectedEvent.estadoID);
+
+
+                $("#dtp1").dxDateBox('instance').option("value", selectedEvent.start);
+                $("#dtp2").dxDateBox('instance').option("value", selectedEvent.end);
+                $('#txtDescription').val(selectedEvent.description);
+                $('#ddThemeColor').val(selectedEvent.color);
+                $('#txtcalendarid').val(selectedEvent.calendarID);
+                $('#txteventid').val(selectedEvent.eventGid);
+
+            }
+            $('#myModal').modal('hide');
+            $('#myModalSave').modal();
+
+        }
+        function SelectEmpleados() {
+            var empleados = [];
+            $.ajax({
+                type: "GET",
+                url: "/Agenda/GetEmpleados",
+                success: function (data) {
+                    $.each(data, function (i, v) {
+                        empleados.push({
+                            ID: v.ID,
+                            NOMBRE: v.NOMBRE,
+                        });
+                    })
+                    $("#EMPLEADO").dxSelectBox({
+                        placeholder: "Seleccione el empleado",
+                        dataSource: new DevExpress.data.ArrayStore({
+                            data: empleados,
+                            key: "ID"
+                        }),
+                        displayExpr: "NOMBRE",
+                        valueExpr: "ID",
+                        searchEnabled: true,
+                        showClearButton: true
+                    });
+                },
+                error: function (error) {
+                    alert(error);
+                    console.log(error);
+                }
+            })
+        }
+        function SelectClientes() {
+            var clientes = [];
+            $.ajax({
+                type: "GET",
+                url: "/Agenda/GetClientes",
+                success: function (data) {
+                    $.each(data, function (i, v) {
+                        clientes.push({
+                            ID: v.ID,
+                            NOMBRE: v.NOMBRE,
+                        });
+                    })
+                    $("#CLIENTE").dxSelectBox({
+                        placeholder: "Seleccione el cliente",
+                        dataSource: new DevExpress.data.ArrayStore({
+                            data: clientes,
+                            key: "ID"
+                        }),
+                        displayExpr: "NOMBRE",
+                        valueExpr: "ID",
+                        searchEnabled: true,
+                        showClearButton: true
+                    });
+                },
+                error: function (error) {
+                    alert(error);
+                    console.log(error);
+                }
+            })
+        }
+        function SelectEstado() {
+            var estados = [];
+            $.ajax({
+                type: "GET",
+                url: "/Agenda/GetEstados",
+                success: function (data) {
+                    $.each(data, function (i, v) {
+                        estados.push({
+                            ID: v.ID,
+                            NOMBRE: v.NOMBRE,
+                        });
+                    })
+                    $("#ESTADO").dxSelectBox({
+                        placeholder: "Seleccione el estado",
+                        dataSource: new DevExpress.data.ArrayStore({
+                            data: estados,
+                            key: "ID"
+                        }),
+                        displayExpr: "NOMBRE",
+                        valueExpr: "ID",
+                        searchEnabled: true,
+                        showClearButton: true
+                    });
+                },
+                error: function (error) {
+                    alert(error);
+                    console.log(error);
+                }
+            })
+        }
+        function SelectFiltroEmpleado() {
+            var empleado = [];
+            $.ajax({
+                type: "GET",
+                url: "/Agenda/GetEmpleados",
+                success: function (data) {
+                    empleado.push({
+                        ID: 0,
+                        DESCRIPCION: "Todos",
+                    });
+                    $.each(data, function (i, v) {
+                        empleado.push({
+                            ID: v.ID,
+                            DESCRIPCION: v.NOMBRE,
+                        });
+                    })
+                    $("#FILTRO_EMPLEADO").dxSelectBox({
+                        placeholder: "Filtre por el empleado",
+                        dataSource: new DevExpress.data.ArrayStore({
+                            data: empleado,
+                            key: "ID"
+                        }),
+                        displayExpr: "DESCRIPCION",
+                        valueExpr: "ID",
+                        value: empleado[0].ID,
+                        onValueChanged: function (data) {
+                            if (data.value != null && data.value != 0) {
+                                empleadof = data.value;
+                            }
+                            else {
+                                empleadof = 0;
+                            }
+                            FetchEventAndRenderCalendar(empleadof, clientef, estadof);
+                        },
+                        searchEnabled: true,
+                        showClearButton: true
+                    });
+                },
+                error: function (error) {
+                    alert(error);
+                    console.log(error);
+                }
+            })
+        }
+        function SelectFiltroCliente() {
+            var cliente = [];
+            $.ajax({
+                type: "GET",
+                url: "/Agenda/GetClientes",
+                success: function (data) {
+                    cliente.push({
+                        ID: 0,
+                        DESCRIPCION: "Todos",
+                    });
+                    $.each(data, function (i, v) {
+                        cliente.push({
+                            ID: v.ID,
+                            DESCRIPCION: v.NOMBRE,
+                        });
+                    })
+                    $("#FILTRO_CLIENTE").dxSelectBox({
+                        placeholder: "Filtre por cliente",
+                        dataSource: new DevExpress.data.ArrayStore({
+                            data: cliente,
+                            key: "ID"
+                        }),
+                        displayExpr: "DESCRIPCION",
+                        valueExpr: "ID",
+                        value: cliente[0].ID,
+                        onValueChanged: function (data) {
+                            if (data.value != null && data.value != 0) {
+                                clientef = data.value;
+                            }
+                            else {
+                                clientef = 0;
+                            }
+                            FetchEventAndRenderCalendar(empleadof, clientef, estadof);
+                        },
+                        searchEnabled: true,
+                        showClearButton: true
+                    });
+                },
+                error: function (error) {
+                    alert(error);
+                    console.log(error);
+                }
+            })
+        }
+        function SelectFiltroEstado() {
+            var estado = [];
+            $.ajax({
+                type: "GET",
+                url: "/Agenda/GetEstados",
+                success: function (data) {
+                    estado.push({
+                        ID: 0,
+                        DESCRIPCION: "Todos",
+                    });
+                    $.each(data, function (i, v) {
+                        estado.push({
+                            ID: v.ID,
+                            DESCRIPCION: v.NOMBRE,
+                        });
+                    })
+                    $("#FILTRO_ESTADO").dxSelectBox({
+                        placeholder: "Filtre por estado",
+                        dataSource: new DevExpress.data.ArrayStore({
+                            data: estado,
+                            key: "ID"
+                        }),
+                        displayExpr: "DESCRIPCION",
+                        valueExpr: "ID",
+                        value: estado[0].ID,
+                        onValueChanged: function (data) {
+                            if (data.value != null && data.value != 0) {
+                                estadof = data.value;
+                            }
+                            else {
+                                estadof = 0;
+                            }
+                            FetchEventAndRenderCalendar(empleadof, clientef, estadof);
+                        },
+                        searchEnabled: true,
+                        showClearButton: true
+                    });
+                },
+                error: function (error) {
+                    alert(error);
+                    console.log(error);
+                }
+            })
+        }
+        function SaveEvent(data) {
+            $.ajax({
+                type: "POST",
+                url: '/Agenda/SaveEvent',
+                data: data,
+                success: function (data) {
+                    if (data.status) {
+                        //Refresh the calender
+                        FetchEventAndRenderCalendar(empleadof, clientef, estadof);
+                        $('#myModalSave').modal('hide');
+                    }
+                },
+                error: function () {
+                    alert('Failed');
+                    FetchEventAndRenderCalendar(empleadof, clientef, estadof);
+                }
+            })
+        }
+        function AccessCalendar() {
+            authenticate().then(loadClient);
+            //authenticate()
+            //loadClient();
+        }
+        /**
+         * Sample JavaScript code for calendar.events.insert
+         * See instructions for running APIs Explorer code samples locally:
+         * https://developers.google.com/explorer-help/guides/code_samples#javascript
+         */
+        function authenticate() {
+            return gapi.auth2.getAuthInstance()
+                .signIn({ scope: "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events" })
+                .then(function () { console.log("Sign-in successful"); },
+                    function (err) { console.error("Error signing in", err); });
+        }
+        function loadClient() {
+            gapi.client.setApiKey(apiKey);
+            return gapi.client.load("https://content.googleapis.com/discovery/v1/apis/calendar/v3/rest")
+                .then(function () { console.log("GAPI client loaded for API"); },
+                    function (err) { console.error("Error loading GAPI client for API", err); });
+        }
+        // Make sure the client is loaded and sign-in is complete before calling this method.
+        function SaveEventGoogleCalendar(event, calendarid) {
+            //"calendarId": "3rv8oad4v0sg71spm53tmuamhc@group.calendar.google.com",
+            return gapi.client.calendar.events.insert({
+                "calendarId": calendarid,
+                "resource": event
+            })
+                .then(function (response) {
+                    // Handle the results here (response.result has the parsed body).
+                    console.log("Response", response.result);
+                },
+                    function (err) { console.error("Execute error", err); });
+        }
+        function DeletEventGCalendar(calendarid, eventid) {
+            return gapi.client.calendar.events.delete({
+                "calendarId": calendarid,
+                "eventId": eventid
+            })
+                .then(function (response) {
+                    // Handle the results here (response.result has the parsed body).
+                    console.log("Response", response);
+                },
+                    function (err) { console.error("Execute error", err); });
+        }
+        gapi.load("client:auth2", function () {
+            gapi.auth2.init({ client_id: "1070999332970-80nbqhptfu6gh9ndhaohc5euo1ee8aq3.apps.googleusercontent.com" });
+        });
+
+    </script>
+
+}

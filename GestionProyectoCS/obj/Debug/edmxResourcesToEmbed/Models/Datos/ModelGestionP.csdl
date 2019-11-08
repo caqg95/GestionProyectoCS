@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GESTIONPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="GESTIONP_CSEntities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="SpListadoVistasCS" ReturnType="Collection(GESTIONPModel.SpListadoVistasCS_Result)" />
+    <EntitySet Name="CARGOes" EntityType="GESTIONPModel.CARGO" />
+    <EntitySet Name="CATALOGO_ACTIVIDAD" EntityType="GESTIONPModel.CATALOGO_ACTIVIDAD" />
+    <EntitySet Name="CLIENTEs" EntityType="GESTIONPModel.CLIENTE" />
+    <EntitySet Name="EMPLEADOes" EntityType="GESTIONPModel.EMPLEADO" />
+    <EntitySet Name="ESTADOes" EntityType="GESTIONPModel.ESTADO" />
+    <EntitySet Name="PROYECTOes" EntityType="GESTIONPModel.PROYECTO" />
+    <EntitySet Name="RESPONSABLEs" EntityType="GESTIONPModel.RESPONSABLE" />
+    <EntitySet Name="VISITAs" EntityType="GESTIONPModel.VISITA" />
+    <AssociationSet Name="FK_EMPLEADO_CARGO" Association="GESTIONPModel.FK_EMPLEADO_CARGO">
+      <End Role="CARGO" EntitySet="CARGOes" />
+      <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PROYECTO_CLIENTE" Association="GESTIONPModel.FK_PROYECTO_CLIENTE">
+      <End Role="CLIENTE" EntitySet="CLIENTEs" />
+      <End Role="PROYECTO" EntitySet="PROYECTOes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VISITA_CLIENTE" Association="GESTIONPModel.FK_VISITA_CLIENTE">
+      <End Role="CLIENTE" EntitySet="CLIENTEs" />
+      <End Role="VISITA" EntitySet="VISITAs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VISITA_EMPLEADO" Association="GESTIONPModel.FK_VISITA_EMPLEADO">
+      <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
+      <End Role="VISITA" EntitySet="VISITAs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VISITA_ESTADO" Association="GESTIONPModel.FK_VISITA_ESTADO">
+      <End Role="ESTADO" EntitySet="ESTADOes" />
+      <End Role="VISITA" EntitySet="VISITAs" />
+    </AssociationSet>
+    <EntitySet Name="CONTACTOes" EntityType="GESTIONPModel.CONTACTO" />
+    <AssociationSet Name="FK_CONTACTO" Association="GESTIONPModel.FK_CONTACTO">
+      <End Role="CLIENTE" EntitySet="CLIENTEs" />
+      <End Role="CONTACTO" EntitySet="CONTACTOes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RESPONSABLE" Association="GESTIONPModel.FK_RESPONSABLE">
+      <End Role="RESPONSABLE" EntitySet="RESPONSABLEs" />
+      <End Role="CONTACTO" EntitySet="CONTACTOes" />
+    </AssociationSet>
+    <EntitySet Name="AspNetRoles" EntityType="GESTIONPModel.AspNetRole" />
+    <FunctionImport Name="SpListadoUsuarioDetail" ReturnType="Collection(GESTIONPModel.SpListadoUsuarioDetail_Result)" />
+    <EntitySet Name="AspNetUsers" EntityType="GESTIONPModel.AspNetUser" />
+  </EntityContainer>
+  <ComplexType Name="SpListadoVistasCS_Result">
+    <Property Type="Int32" Name="ID_VISITA" Nullable="false" />
+    <Property Type="Int32" Name="ID_CLIENTE" Nullable="false" />
+    <Property Type="String" Name="CLIENTE" Nullable="false" MaxLength="200" />
+    <Property Type="Int32" Name="ID_EMPLEADO" Nullable="false" />
+    <Property Type="String" Name="NOMBRES" Nullable="false" MaxLength="250" />
+    <Property Type="String" Name="APELLIDOS" Nullable="false" MaxLength="250" />
+    <Property Type="String" Name="ASUNTO" Nullable="false" MaxLength="500" />
+    <Property Type="String" Name="DESCRIPCION" Nullable="true" MaxLength="500" />
+    <Property Type="DateTime" Name="FECHA_INICIO" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="FECHA_FIN" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="ID_ESTADO" Nullable="false" />
+    <Property Type="String" Name="ESTADO" Nullable="false" MaxLength="250" />
+    <Property Type="Boolean" Name="ACTIVO" Nullable="false" />
+    <Property Type="String" Name="COLOR" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="ID_CALENDAR" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="ID_EVENT" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="EMPLEADO" Nullable="false" MaxLength="501" />
+    <Property Type="DateTime" Name="FECHA_CREACION" Nullable="false" Precision="23" />
+  </ComplexType>
+  <EntityType Name="CARGO">
+    <Key>
+      <PropertyRef Name="ID_CARGO" />
+    </Key>
+    <Property Name="ID_CARGO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DESCRIPCION" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+    <Property Name="USUARIO_CREACION" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USUARIO_MODIFICACION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="EMPLEADOes" Relationship="GESTIONPModel.FK_EMPLEADO_CARGO" FromRole="CARGO" ToRole="EMPLEADO" />
+  </EntityType>
+  <EntityType Name="CATALOGO_ACTIVIDAD">
+    <Key>
+      <PropertyRef Name="ID_ACTIVIDAD" />
+    </Key>
+    <Property Name="ID_ACTIVIDAD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DESCRIPCION" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TIPO" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="ID_ACTIVIDAD_PADRE" Type="Int32" />
+    <Property Name="CANT_MIN_HORA" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CANT_MAX_HORA" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="COMPLEJIDAD" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+    <Property Name="USUARIO_CREACION" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USUARIO_MODIFICACION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="CLIENTE">
+    <Key>
+      <PropertyRef Name="ID_CLIENTE" />
+    </Key>
+    <Property Name="ID_CLIENTE" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="COD_CLIENTE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CLIENTE1" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+    <Property Name="DIRECCION" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="USUARIO_CREACION" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USUARIO_MODIFICACION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PROYECTOes" Relationship="GESTIONPModel.FK_PROYECTO_CLIENTE" FromRole="CLIENTE" ToRole="PROYECTO" />
+    <NavigationProperty Name="VISITAs" Relationship="GESTIONPModel.FK_VISITA_CLIENTE" FromRole="CLIENTE" ToRole="VISITA" />
+    <NavigationProperty Name="CONTACTOes" Relationship="GESTIONPModel.FK_CONTACTO" FromRole="CLIENTE" ToRole="CONTACTO" />
+  </EntityType>
+  <EntityType Name="EMPLEADO">
+    <Key>
+      <PropertyRef Name="ID_EMPLEADO" />
+    </Key>
+    <Property Name="ID_EMPLEADO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_CARGO" Type="Int32" Nullable="false" />
+    <Property Name="NOMBRES" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="APELLIDOS" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="IDENTIDAD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="COLOR" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="TELEF1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TELEF2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="EMAIL1" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="EMAIL2" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="ID_CALENDAR" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+    <Property Name="USUARIO_CREACION" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USUARIO_MODIFICACION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CARGO" Relationship="GESTIONPModel.FK_EMPLEADO_CARGO" FromRole="EMPLEADO" ToRole="CARGO" />
+    <NavigationProperty Name="VISITAs" Relationship="GESTIONPModel.FK_VISITA_EMPLEADO" FromRole="EMPLEADO" ToRole="VISITA" />
+  </EntityType>
+  <EntityType Name="ESTADO">
+    <Key>
+      <PropertyRef Name="ID_ESTADO" />
+    </Key>
+    <Property Name="ID_ESTADO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DESCRIPCION" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+    <Property Name="USUARIO_CREACION" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USUARIO_MODIFICACION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="VISITAs" Relationship="GESTIONPModel.FK_VISITA_ESTADO" FromRole="ESTADO" ToRole="VISITA" />
+  </EntityType>
+  <EntityType Name="PROYECTO">
+    <Key>
+      <PropertyRef Name="ID_PROYECTO" />
+    </Key>
+    <Property Name="ID_PROYECTO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_CLIENTE" Type="Int32" Nullable="false" />
+    <Property Name="DESCRIPCION" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="FECHA_INICIO" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FECHA_FIN" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LONGITUD" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="LATITUD" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="EMPLEADO_RESPONSABLE" Type="Int32" />
+    <Property Name="OBSERVACION" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+    <Property Name="USUARIO_CREACION" Type="Int32" Nullable="false" />
+    <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USUARIO_MODIFICACION" Type="Int32" />
+    <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CLIENTE" Relationship="GESTIONPModel.FK_PROYECTO_CLIENTE" FromRole="PROYECTO" ToRole="CLIENTE" />
+  </EntityType>
+  <EntityType Name="RESPONSABLE">
+    <Key>
+      <PropertyRef Name="ID_RESPONSABLE" />
+    </Key>
+    <Property Name="ID_RESPONSABLE" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DESCRIPCION" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+    <Property Name="USUARIO_CREACION" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USUARIO_MODIFICACION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CONTACTOes" Relationship="GESTIONPModel.FK_RESPONSABLE" FromRole="RESPONSABLE" ToRole="CONTACTO" />
+  </EntityType>
+  <EntityType Name="VISITA">
+    <Key>
+      <PropertyRef Name="ID_VISITA" />
+    </Key>
+    <Property Name="ID_VISITA" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_CLIENTE" Type="Int32" Nullable="false" />
+    <Property Name="ID_EMPLEADO" Type="Int32" Nullable="false" />
+    <Property Name="ASUNTO" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="DESCRIPCION" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="ID_ESTADO" Type="Int32" Nullable="false" />
+    <Property Name="FECHA_INICIO" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FECHA_FIN" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ID_EVENT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+    <Property Name="USUARIO_CREACION" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USUARIO_MODIFICACION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CLIENTE" Relationship="GESTIONPModel.FK_VISITA_CLIENTE" FromRole="VISITA" ToRole="CLIENTE" />
+    <NavigationProperty Name="EMPLEADO" Relationship="GESTIONPModel.FK_VISITA_EMPLEADO" FromRole="VISITA" ToRole="EMPLEADO" />
+    <NavigationProperty Name="ESTADO" Relationship="GESTIONPModel.FK_VISITA_ESTADO" FromRole="VISITA" ToRole="ESTADO" />
+  </EntityType>
+  <Association Name="FK_EMPLEADO_CARGO">
+    <End Type="GESTIONPModel.CARGO" Role="CARGO" Multiplicity="1" />
+    <End Type="GESTIONPModel.EMPLEADO" Role="EMPLEADO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CARGO">
+        <PropertyRef Name="ID_CARGO" />
+      </Principal>
+      <Dependent Role="EMPLEADO">
+        <PropertyRef Name="ID_CARGO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PROYECTO_CLIENTE">
+    <End Type="GESTIONPModel.CLIENTE" Role="CLIENTE" Multiplicity="1" />
+    <End Type="GESTIONPModel.PROYECTO" Role="PROYECTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CLIENTE">
+        <PropertyRef Name="ID_CLIENTE" />
+      </Principal>
+      <Dependent Role="PROYECTO">
+        <PropertyRef Name="ID_CLIENTE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VISITA_CLIENTE">
+    <End Type="GESTIONPModel.CLIENTE" Role="CLIENTE" Multiplicity="1" />
+    <End Type="GESTIONPModel.VISITA" Role="VISITA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CLIENTE">
+        <PropertyRef Name="ID_CLIENTE" />
+      </Principal>
+      <Dependent Role="VISITA">
+        <PropertyRef Name="ID_CLIENTE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VISITA_EMPLEADO">
+    <End Type="GESTIONPModel.EMPLEADO" Role="EMPLEADO" Multiplicity="1" />
+    <End Type="GESTIONPModel.VISITA" Role="VISITA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLEADO">
+        <PropertyRef Name="ID_EMPLEADO" />
+      </Principal>
+      <Dependent Role="VISITA">
+        <PropertyRef Name="ID_EMPLEADO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VISITA_ESTADO">
+    <End Type="GESTIONPModel.ESTADO" Role="ESTADO" Multiplicity="1" />
+    <End Type="GESTIONPModel.VISITA" Role="VISITA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ESTADO">
+        <PropertyRef Name="ID_ESTADO" />
+      </Principal>
+      <Dependent Role="VISITA">
+        <PropertyRef Name="ID_ESTADO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="CONTACTO">
+    <Key>
+      <PropertyRef Name="ID_CONTACTO" />
+    </Key>
+    <Property Name="ID_CONTACTO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NOMBRES" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="APELLIDOS" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="TELF1" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="TELF2" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="EXT" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="EMAIL1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="EMAIL2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+    <Property Name="ID_CLIENTE" Type="Int32" Nullable="false" />
+    <Property Name="ID_RESPONSABLE" Type="Int32" Nullable="false" />
+    <Property Name="USUARIO_CREACION" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USUARIO_MODIFICACION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CLIENTE" Relationship="GESTIONPModel.FK_CONTACTO" FromRole="CONTACTO" ToRole="CLIENTE" />
+    <NavigationProperty Name="RESPONSABLE" Relationship="GESTIONPModel.FK_RESPONSABLE" FromRole="CONTACTO" ToRole="RESPONSABLE" />
+  </EntityType>
+  <Association Name="FK_CONTACTO">
+    <End Type="GESTIONPModel.CLIENTE" Role="CLIENTE" Multiplicity="1" />
+    <End Type="GESTIONPModel.CONTACTO" Role="CONTACTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CLIENTE">
+        <PropertyRef Name="ID_CLIENTE" />
+      </Principal>
+      <Dependent Role="CONTACTO">
+        <PropertyRef Name="ID_CLIENTE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RESPONSABLE">
+    <End Type="GESTIONPModel.RESPONSABLE" Role="RESPONSABLE" Multiplicity="1" />
+    <End Type="GESTIONPModel.CONTACTO" Role="CONTACTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RESPONSABLE">
+        <PropertyRef Name="ID_RESPONSABLE" />
+      </Principal>
+      <Dependent Role="CONTACTO">
+        <PropertyRef Name="ID_RESPONSABLE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AspNetRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Discriminator" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <ComplexType Name="SpListadoUsuarioDetail_Result">
+    <Property Type="String" Name="Name" Nullable="true" />
+    <Property Type="String" Name="UserName" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="rol" Nullable="false" MaxLength="256" />
+  </ComplexType>
+  <EntityType Name="AspNetUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="isActive" Type="Boolean" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="ID_EMPELADO" Type="Int32" />
+  </EntityType>
+</Schema>

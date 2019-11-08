@@ -1,0 +1,62 @@
+﻿@model GestionProyectoCS.Models.Datos.RESPONSABLE
+
+@{
+    ViewBag.Title = "Nueva Responsabilidad";
+}
+<div class="app-main">
+    @Html.Partial("_SideBar")
+    <div class="app-main__outer">
+        <div class="app-main__inner">
+            <div class="app-page-title">
+                <div class="page-title-wrapper">
+                    <div class="page-title-heading">
+                        <div class="page-title-icon">
+                            <i class="pe-7s-study icon-gradient bg-warm-flame">
+                            </i>
+                        </div>
+                        <div>
+                            Responsabilidad
+                            <div class="page-title-subheading">
+                                Nueva Responsabilidad
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            @using (Html.BeginForm())
+                            {
+                                @*@Html.AntiForgeryToken()*@
+
+                                <div class="form-horizontal">
+                                    <h4>Nueva Responsabilidad</h4>
+                                    <hr />
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.DESCRIPCION,"Responsabilidad", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.DESCRIPCION, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.DESCRIPCION, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Guardar" class="btn btn-primary" />
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <div>
+                                @Html.ActionLink("Regresar a la Lista", "Index")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

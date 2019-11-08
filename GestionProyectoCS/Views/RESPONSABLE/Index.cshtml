@@ -1,0 +1,101 @@
+﻿@model IEnumerable<GestionProyectoCS.Models.Datos.RESPONSABLE>
+
+@{
+    ViewBag.Title = "Listado De Responsabilidades";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+<div class="app-main">
+    @Html.Partial("_SideBar")
+    <div class="app-main__outer">
+        <div class="app-main__inner">
+            <div class="app-page-title">
+                <div class="page-title-wrapper">
+                    <div class="page-title-heading">
+                        <div class="page-title-icon">
+                            <i class="pe-7s-study icon-gradient bg-warm-flame">
+                            </i>
+                        </div>
+                        <div>
+                            Responsabilidad
+                            <div class="page-title-subheading">
+                                Listado de Responsabilidades
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <p>
+                                @Html.ActionLink("Nueva Responsabilidad", "Create")
+                            </p>
+                            <table id="responsable" class="table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                           Responsabilidad
+                                        </th>
+                                        <th>
+                                           Estado
+                                        </th>
+                                        <th>
+                                            Fecha Registro
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DESCRIPCION)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ACTIVO)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FECHA_CREACION)
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.ID_RESPONSABLE }) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.ID_RESPONSABLE })
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>
+                                            Responsabilidad
+                                        </th>
+                                        <th>
+                                            Estado
+                                        </th>
+                                        <th>
+                                            Fecha Registro
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#responsable').DataTable();
+        });
+    </script>
+}

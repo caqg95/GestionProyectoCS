@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2bc6c37422c14ae99d7b88e8294ae2b8" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="GESTIONPModel.CARGO" Width="1.5" PointX="1.5" PointY="17.875" />
+        <EntityTypeShape EntityType="GESTIONPModel.CATALOGO_ACTIVIDAD" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="GESTIONPModel.CLIENTE" Width="1.5" PointX="0.75" PointY="6.875" />
+        <EntityTypeShape EntityType="GESTIONPModel.EMPLEADO" Width="1.5" PointX="3.75" PointY="16.875" />
+        <EntityTypeShape EntityType="GESTIONPModel.ESTADO" Width="1.5" PointX="3.75" PointY="2.625" />
+        <EntityTypeShape EntityType="GESTIONPModel.PROYECTO" Width="1.5" PointX="3" PointY="11.625" />
+        <EntityTypeShape EntityType="GESTIONPModel.RESPONSABLE" Width="1.5" PointX="0.75" PointY="3.25" />
+        <EntityTypeShape EntityType="GESTIONPModel.VISITA" Width="1.5" PointX="6" PointY="6.375" />
+        <AssociationConnector Association="GESTIONPModel.FK_EMPLEADO_CARGO" />
+        <AssociationConnector Association="GESTIONPModel.FK_PROYECTO_CLIENTE" />
+        <AssociationConnector Association="GESTIONPModel.FK_VISITA_CLIENTE" />
+        <AssociationConnector Association="GESTIONPModel.FK_VISITA_EMPLEADO" />
+        <AssociationConnector Association="GESTIONPModel.FK_VISITA_ESTADO" />
+        <EntityTypeShape EntityType="GESTIONPModel.CONTACTO" Width="1.5" PointX="3" PointY="6.625" />
+        <AssociationConnector Association="GESTIONPModel.FK_CONTACTO" />
+        <AssociationConnector Association="GESTIONPModel.FK_RESPONSABLE" />
+        <EntityTypeShape EntityType="GESTIONPModel.AspNetRole" Width="1.5" PointX="12" PointY="3.375" />
+        <EntityTypeShape EntityType="GESTIONPModel.AspNetUser" Width="1.5" PointX="8.375" PointY="0.75" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

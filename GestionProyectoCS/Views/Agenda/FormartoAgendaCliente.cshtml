@@ -1,0 +1,32 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
+    <title>Agenda Por Cliente</title>
+    @Html.DevExpress().GetStyleSheets(
+                                         new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+                                         new StyleSheet { ExtensionSuite = ExtensionSuite.Report },
+                                         new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+                                     )
+    @Html.DevExpress().GetScripts(
+                                         new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+                                         new Script { ExtensionSuite = ExtensionSuite.Report },
+                                         new Script { ExtensionSuite = ExtensionSuite.GridView }
+                                     )
+</head>
+<body>
+    <div style="width:1500px;padding-left:50px">
+        @Html.DevExpress().WebDocumentViewer(settings =>
+             {
+                 settings.Name = "FormartoAgendaCliente";
+             }).Bind(Model).GetHtml()
+    </div>
+</body>
+</html>

@@ -1,0 +1,304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GESTIONPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AspNetRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Discriminator" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" />
+    <Property Name="isActive" Type="bit" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="256" />
+    <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" />
+    <Property Name="SecurityStamp" Type="nvarchar(max)" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" />
+    <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="datetime" />
+    <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="ID_EMPELADO" Type="int" />
+  </EntityType>
+  <EntityType Name="CARGO">
+    <Key>
+      <PropertyRef Name="ID_CARGO" />
+    </Key>
+    <Property Name="ID_CARGO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRIPCION" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="ACTIVO" Type="bit" Nullable="false" />
+    <Property Name="USUARIO_CREACION" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FECHA_CREACION" Type="datetime" Nullable="false" />
+    <Property Name="USUARIO_MODIFICACION" Type="nvarchar" MaxLength="50" />
+    <Property Name="FECHA_MODIFICACION" Type="datetime" />
+  </EntityType>
+  <EntityType Name="CATALOGO_ACTIVIDAD">
+    <Key>
+      <PropertyRef Name="ID_ACTIVIDAD" />
+    </Key>
+    <Property Name="ID_ACTIVIDAD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRIPCION" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TIPO" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="ID_ACTIVIDAD_PADRE" Type="int" />
+    <Property Name="CANT_MIN_HORA" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CANT_MAX_HORA" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="COMPLEJIDAD" Type="nchar" MaxLength="10" />
+    <Property Name="ACTIVO" Type="bit" Nullable="false" />
+    <Property Name="USUARIO_CREACION" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FECHA_CREACION" Type="datetime" Nullable="false" />
+    <Property Name="USUARIO_MODIFICACION" Type="nvarchar" MaxLength="50" />
+    <Property Name="FECHA_MODIFICACION" Type="datetime" />
+  </EntityType>
+  <EntityType Name="CLIENTE">
+    <Key>
+      <PropertyRef Name="ID_CLIENTE" />
+    </Key>
+    <Property Name="ID_CLIENTE" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="COD_CLIENTE" Type="nvarchar" MaxLength="50" />
+    <Property Name="CLIENTE" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="ACTIVO" Type="bit" Nullable="false" />
+    <Property Name="DIRECCION" Type="nvarchar" MaxLength="200" />
+    <Property Name="USUARIO_CREACION" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FECHA_CREACION" Type="datetime" Nullable="false" />
+    <Property Name="USUARIO_MODIFICACION" Type="nvarchar" MaxLength="50" />
+    <Property Name="FECHA_MODIFICACION" Type="datetime" />
+  </EntityType>
+  <EntityType Name="CONTACTO">
+    <Key>
+      <PropertyRef Name="ID_CONTACTO" />
+    </Key>
+    <Property Name="ID_CONTACTO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NOMBRES" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="APELLIDOS" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="TELF1" Type="nchar" MaxLength="20" />
+    <Property Name="TELF2" Type="nchar" MaxLength="20" />
+    <Property Name="EXT" Type="nchar" MaxLength="20" />
+    <Property Name="EMAIL1" Type="nvarchar" MaxLength="200" />
+    <Property Name="EMAIL2" Type="nvarchar" MaxLength="200" />
+    <Property Name="ACTIVO" Type="bit" Nullable="false" />
+    <Property Name="ID_CLIENTE" Type="int" Nullable="false" />
+    <Property Name="ID_RESPONSABLE" Type="int" Nullable="false" />
+    <Property Name="USUARIO_CREACION" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FECHA_CREACION" Type="datetime" Nullable="false" />
+    <Property Name="USUARIO_MODIFICACION" Type="nvarchar" MaxLength="50" />
+    <Property Name="FECHA_MODIFICACION" Type="datetime" />
+  </EntityType>
+  <EntityType Name="EMPLEADO">
+    <Key>
+      <PropertyRef Name="ID_EMPLEADO" />
+    </Key>
+    <Property Name="ID_EMPLEADO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_CARGO" Type="int" Nullable="false" />
+    <Property Name="NOMBRES" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="APELLIDOS" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="IDENTIDAD" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="COLOR" Type="nvarchar" MaxLength="20" />
+    <Property Name="TELEF1" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TELEF2" Type="nvarchar" MaxLength="50" />
+    <Property Name="EMAIL1" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="EMAIL2" Type="nvarchar" MaxLength="150" />
+    <Property Name="ID_CALENDAR" Type="nvarchar" MaxLength="150" />
+    <Property Name="ACTIVO" Type="bit" Nullable="false" />
+    <Property Name="USUARIO_CREACION" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FECHA_CREACION" Type="datetime" Nullable="false" />
+    <Property Name="USUARIO_MODIFICACION" Type="nvarchar" MaxLength="50" />
+    <Property Name="FECHA_MODIFICACION" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ESTADO">
+    <Key>
+      <PropertyRef Name="ID_ESTADO" />
+    </Key>
+    <Property Name="ID_ESTADO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRIPCION" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="ACTIVO" Type="bit" Nullable="false" />
+    <Property Name="USUARIO_CREACION" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FECHA_CREACION" Type="datetime" Nullable="false" />
+    <Property Name="USUARIO_MODIFICACION" Type="nvarchar" MaxLength="50" />
+    <Property Name="FECHA_MODIFICACION" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PROYECTO">
+    <Key>
+      <PropertyRef Name="ID_PROYECTO" />
+    </Key>
+    <Property Name="ID_PROYECTO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_CLIENTE" Type="int" Nullable="false" />
+    <Property Name="DESCRIPCION" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="FECHA_INICIO" Type="datetime" Nullable="false" />
+    <Property Name="FECHA_FIN" Type="datetime" Nullable="false" />
+    <Property Name="LONGITUD" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="LATITUD" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="EMPLEADO_RESPONSABLE" Type="int" />
+    <Property Name="OBSERVACION" Type="nvarchar" MaxLength="300" />
+    <Property Name="ACTIVO" Type="bit" Nullable="false" />
+    <Property Name="USUARIO_CREACION" Type="int" Nullable="false" />
+    <Property Name="FECHA_CREACION" Type="datetime" Nullable="false" />
+    <Property Name="USUARIO_MODIFICACION" Type="int" />
+    <Property Name="FECHA_MODIFICACION" Type="datetime" />
+  </EntityType>
+  <EntityType Name="RESPONSABLE">
+    <Key>
+      <PropertyRef Name="ID_RESPONSABLE" />
+    </Key>
+    <Property Name="ID_RESPONSABLE" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRIPCION" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="ACTIVO" Type="bit" Nullable="false" />
+    <Property Name="USUARIO_CREACION" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FECHA_CREACION" Type="datetime" Nullable="false" />
+    <Property Name="USUARIO_MODIFICACION" Type="nvarchar" MaxLength="50" />
+    <Property Name="FECHA_MODIFICACION" Type="datetime" />
+  </EntityType>
+  <EntityType Name="VISITA">
+    <Key>
+      <PropertyRef Name="ID_VISITA" />
+    </Key>
+    <Property Name="ID_VISITA" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_CLIENTE" Type="int" Nullable="false" />
+    <Property Name="ID_EMPLEADO" Type="int" Nullable="false" />
+    <Property Name="ASUNTO" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="DESCRIPCION" Type="nvarchar" MaxLength="500" />
+    <Property Name="ID_ESTADO" Type="int" Nullable="false" />
+    <Property Name="FECHA_INICIO" Type="datetime" Nullable="false" />
+    <Property Name="FECHA_FIN" Type="datetime" Nullable="false" />
+    <Property Name="ID_EVENT" Type="nvarchar" MaxLength="50" />
+    <Property Name="ACTIVO" Type="bit" Nullable="false" />
+    <Property Name="USUARIO_CREACION" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FECHA_CREACION" Type="datetime" Nullable="false" />
+    <Property Name="USUARIO_MODIFICACION" Type="nvarchar" MaxLength="50" />
+    <Property Name="FECHA_MODIFICACION" Type="datetime" />
+  </EntityType>
+  <Association Name="FK_CONTACTO">
+    <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
+    <End Role="CONTACTO" Type="Self.CONTACTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CLIENTE">
+        <PropertyRef Name="ID_CLIENTE" />
+      </Principal>
+      <Dependent Role="CONTACTO">
+        <PropertyRef Name="ID_CLIENTE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EMPLEADO_CARGO">
+    <End Role="CARGO" Type="Self.CARGO" Multiplicity="1" />
+    <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CARGO">
+        <PropertyRef Name="ID_CARGO" />
+      </Principal>
+      <Dependent Role="EMPLEADO">
+        <PropertyRef Name="ID_CARGO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PROYECTO_CLIENTE">
+    <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
+    <End Role="PROYECTO" Type="Self.PROYECTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CLIENTE">
+        <PropertyRef Name="ID_CLIENTE" />
+      </Principal>
+      <Dependent Role="PROYECTO">
+        <PropertyRef Name="ID_CLIENTE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RESPONSABLE">
+    <End Role="RESPONSABLE" Type="Self.RESPONSABLE" Multiplicity="1" />
+    <End Role="CONTACTO" Type="Self.CONTACTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RESPONSABLE">
+        <PropertyRef Name="ID_RESPONSABLE" />
+      </Principal>
+      <Dependent Role="CONTACTO">
+        <PropertyRef Name="ID_RESPONSABLE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VISITA_CLIENTE">
+    <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
+    <End Role="VISITA" Type="Self.VISITA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CLIENTE">
+        <PropertyRef Name="ID_CLIENTE" />
+      </Principal>
+      <Dependent Role="VISITA">
+        <PropertyRef Name="ID_CLIENTE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VISITA_EMPLEADO">
+    <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+    <End Role="VISITA" Type="Self.VISITA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLEADO">
+        <PropertyRef Name="ID_EMPLEADO" />
+      </Principal>
+      <Dependent Role="VISITA">
+        <PropertyRef Name="ID_EMPLEADO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VISITA_ESTADO">
+    <End Role="ESTADO" Type="Self.ESTADO" Multiplicity="1" />
+    <End Role="VISITA" Type="Self.VISITA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ESTADO">
+        <PropertyRef Name="ID_ESTADO" />
+      </Principal>
+      <Dependent Role="VISITA">
+        <PropertyRef Name="ID_ESTADO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="SpListadoUsuarioDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SpListadoVistasCS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="GESTIONPModelStoreContainer">
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CARGO" EntityType="Self.CARGO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CATALOGO_ACTIVIDAD" EntityType="Self.CATALOGO_ACTIVIDAD" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CONTACTO" EntityType="Self.CONTACTO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EMPLEADO" EntityType="Self.EMPLEADO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ESTADO" EntityType="Self.ESTADO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PROYECTO" EntityType="Self.PROYECTO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RESPONSABLE" EntityType="Self.RESPONSABLE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VISITA" EntityType="Self.VISITA" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_CONTACTO" Association="Self.FK_CONTACTO">
+      <End Role="CLIENTE" EntitySet="CLIENTE" />
+      <End Role="CONTACTO" EntitySet="CONTACTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EMPLEADO_CARGO" Association="Self.FK_EMPLEADO_CARGO">
+      <End Role="CARGO" EntitySet="CARGO" />
+      <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PROYECTO_CLIENTE" Association="Self.FK_PROYECTO_CLIENTE">
+      <End Role="CLIENTE" EntitySet="CLIENTE" />
+      <End Role="PROYECTO" EntitySet="PROYECTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RESPONSABLE" Association="Self.FK_RESPONSABLE">
+      <End Role="RESPONSABLE" EntitySet="RESPONSABLE" />
+      <End Role="CONTACTO" EntitySet="CONTACTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VISITA_CLIENTE" Association="Self.FK_VISITA_CLIENTE">
+      <End Role="CLIENTE" EntitySet="CLIENTE" />
+      <End Role="VISITA" EntitySet="VISITA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VISITA_EMPLEADO" Association="Self.FK_VISITA_EMPLEADO">
+      <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+      <End Role="VISITA" EntitySet="VISITA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VISITA_ESTADO" Association="Self.FK_VISITA_ESTADO">
+      <End Role="ESTADO" EntitySet="ESTADO" />
+      <End Role="VISITA" EntitySet="VISITA" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
