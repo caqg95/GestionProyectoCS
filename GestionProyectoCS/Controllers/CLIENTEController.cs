@@ -48,7 +48,7 @@ namespace GestionProyectoCS.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID_CLIENTE,COD_CLIENTE,CLIENTE1,ACTIVO,DIRECCION,USUARIO_CREACION,FECHA_CREACION,USUARIO_MODIFICACION,FECHA_MODIFICACION")] CLIENTE cLIENTE)
+        public ActionResult Create([Bind(Include = "ID_CLIENTE,COD_CLIENTE,CLIENTE1,ACTIVO,LONGITUD,LATITUD,DIRECCION,USUARIO_CREACION,FECHA_CREACION,USUARIO_MODIFICACION,FECHA_MODIFICACION")] CLIENTE cLIENTE)
         {
             if (ModelState.IsValid)
             {
@@ -84,8 +84,19 @@ namespace GestionProyectoCS.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID_CLIENTE,COD_CLIENTE,CLIENTE1,ACTIVO,DIRECCION,USUARIO_CREACION,FECHA_CREACION,USUARIO_MODIFICACION,FECHA_MODIFICACION")] CLIENTE cLIENTE)
+        public ActionResult Edit([Bind(Include = "ID_CLIENTE,COD_CLIENTE,CLIENTE1,ACTIVO,LONGITUD,LATITUD,DIRECCION,USUARIO_CREACION,FECHA_CREACION,USUARIO_MODIFICACION,FECHA_MODIFICACION")] CLIENTE cLIENTE)
         {
+            //string url = "http://checkip.dyndns.org";
+            //System.Net.WebRequest req = System.Net.WebRequest.Create(url);
+            //System.Net.WebResponse resp = req.GetResponse();
+            //System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
+            //string response = sr.ReadToEnd().Trim();
+            //string[] a = response.Split(':');
+            //string a2 = a[1].Substring(1);
+            //string[] a3 = a2.Split('<');
+            //string a4 = a3[0];
+
+            string pubIp = new System.Net.WebClient().DownloadString("https://api.ipify.org");
             if (ModelState.IsValid)
             {
                 string usuario = User.Identity.GetUserName();
@@ -93,6 +104,8 @@ namespace GestionProyectoCS.Controllers
                 clientedb.COD_CLIENTE = cLIENTE.COD_CLIENTE;
                 clientedb.CLIENTE1 = cLIENTE.CLIENTE1;
                 clientedb.DIRECCION = cLIENTE.DIRECCION;
+                clientedb.LONGITUD = cLIENTE.LONGITUD;
+                clientedb.LATITUD = cLIENTE.LATITUD;
                 clientedb.USUARIO_MODIFICACION = usuario;
                 clientedb.FECHA_MODIFICACION = DateTime.Now;
                 db.SaveChanges();

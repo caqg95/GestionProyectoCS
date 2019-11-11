@@ -64,8 +64,11 @@
     <Property Name="ID_CLIENTE" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="COD_CLIENTE" Type="nvarchar" MaxLength="50" />
     <Property Name="CLIENTE" Type="nvarchar" MaxLength="200" Nullable="false" />
-    <Property Name="ACTIVO" Type="bit" Nullable="false" />
     <Property Name="DIRECCION" Type="nvarchar" MaxLength="200" />
+    <Property Name="IP_PUBLIC" Type="nchar" MaxLength="25" />
+    <Property Name="LONGITUD" Type="decimal" Precision="18" Scale="6" />
+    <Property Name="LATITUD" Type="decimal" Precision="18" Scale="6" />
+    <Property Name="ACTIVO" Type="bit" Nullable="false" />
     <Property Name="USUARIO_CREACION" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="FECHA_CREACION" Type="datetime" Nullable="false" />
     <Property Name="USUARIO_MODIFICACION" Type="nvarchar" MaxLength="50" />
@@ -143,6 +146,25 @@
     <Property Name="USUARIO_MODIFICACION" Type="int" />
     <Property Name="FECHA_MODIFICACION" Type="datetime" />
   </EntityType>
+  <EntityType Name="REGISTRO_MARCA">
+    <Key>
+      <PropertyRef Name="ID_REGISTRO_MARCA" />
+    </Key>
+    <Property Name="ID_REGISTRO_MARCA" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_EMPLEADO" Type="int" Nullable="false" />
+    <Property Name="FECHA" Type="date" Nullable="false" />
+    <Property Name="H_ENTE" Type="datetime" />
+    <Property Name="H_SALE" Type="datetime" />
+    <Property Name="H_ENTA" Type="datetime" />
+    <Property Name="H_SALA" Type="datetime" />
+    <Property Name="H_ENTS" Type="datetime" />
+    <Property Name="H_SALS" Type="datetime" />
+    <Property Name="ACTIVO" Type="bit" Nullable="false" />
+    <Property Name="USUARIO_CREACION" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FECHA_CREACION" Type="datetime" Nullable="false" />
+    <Property Name="USUARIO_MODIFICACION" Type="nvarchar" MaxLength="50" />
+    <Property Name="FECHA_MODIFICACION" Type="datetime" />
+  </EntityType>
   <EntityType Name="RESPONSABLE">
     <Key>
       <PropertyRef Name="ID_RESPONSABLE" />
@@ -210,6 +232,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_REGISTRO_MARCA_EMPLEADO">
+    <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+    <End Role="REGISTRO_MARCA" Type="Self.REGISTRO_MARCA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLEADO">
+        <PropertyRef Name="ID_EMPLEADO" />
+      </Principal>
+      <Dependent Role="REGISTRO_MARCA">
+        <PropertyRef Name="ID_EMPLEADO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_RESPONSABLE">
     <End Role="RESPONSABLE" Type="Self.RESPONSABLE" Multiplicity="1" />
     <End Role="CONTACTO" Type="Self.CONTACTO" Multiplicity="*" />
@@ -270,6 +304,7 @@
     <EntitySet Name="EMPLEADO" EntityType="Self.EMPLEADO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ESTADO" EntityType="Self.ESTADO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PROYECTO" EntityType="Self.PROYECTO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="REGISTRO_MARCA" EntityType="Self.REGISTRO_MARCA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RESPONSABLE" EntityType="Self.RESPONSABLE" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="VISITA" EntityType="Self.VISITA" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_CONTACTO" Association="Self.FK_CONTACTO">
@@ -283,6 +318,10 @@
     <AssociationSet Name="FK_PROYECTO_CLIENTE" Association="Self.FK_PROYECTO_CLIENTE">
       <End Role="CLIENTE" EntitySet="CLIENTE" />
       <End Role="PROYECTO" EntitySet="PROYECTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_REGISTRO_MARCA_EMPLEADO" Association="Self.FK_REGISTRO_MARCA_EMPLEADO">
+      <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+      <End Role="REGISTRO_MARCA" EntitySet="REGISTRO_MARCA" />
     </AssociationSet>
     <AssociationSet Name="FK_RESPONSABLE" Association="Self.FK_RESPONSABLE">
       <End Role="RESPONSABLE" EntitySet="RESPONSABLE" />

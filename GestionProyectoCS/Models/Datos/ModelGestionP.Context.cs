@@ -29,7 +29,6 @@ namespace GestionProyectoCS.Models.Datos
     
         public virtual DbSet<CARGO> CARGOes { get; set; }
         public virtual DbSet<CATALOGO_ACTIVIDAD> CATALOGO_ACTIVIDAD { get; set; }
-        public virtual DbSet<CLIENTE> CLIENTEs { get; set; }
         public virtual DbSet<EMPLEADO> EMPLEADOes { get; set; }
         public virtual DbSet<ESTADO> ESTADOes { get; set; }
         public virtual DbSet<PROYECTO> PROYECTOes { get; set; }
@@ -38,6 +37,8 @@ namespace GestionProyectoCS.Models.Datos
         public virtual DbSet<CONTACTO> CONTACTOes { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<CLIENTE> CLIENTEs { get; set; }
+        public virtual DbSet<REGISTRO_MARCA> REGISTRO_MARCA { get; set; }
     
         public virtual ObjectResult<SpListadoVistasCS_Result> SpListadoVistasCS()
         {

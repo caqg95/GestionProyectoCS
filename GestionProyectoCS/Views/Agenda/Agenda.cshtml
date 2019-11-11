@@ -100,10 +100,10 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-                <button id="btnDelete" class="btn btn-default btn-sm pull-right">
+                <button id="btnDelete" class="btn btn-danger btn-sm pull-right">
                     <span class="glyphicon glyphicon-remove"></span> Remover
                 </button>
-                <button id="btnEdit" class="btn btn-default btn-sm pull-right" style="margin-right:5px;">
+                <button id="btnEdit" class="btn btn-warning btn-sm pull-right" style="margin-right:5px;">
                     <span class="glyphicon glyphicon-pencil"></span> Editar
                 </button>
                 <p id="pDetails"></p>
@@ -177,7 +177,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" id="btnSave" class="btn btn-success">Guardar</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -971,6 +971,7 @@
             if (selectedEvent != null) {
                 // console.log(selectedEvent);
                 fechaCalendario = selectedEvent.start;
+                var evento = selectedEvent.eventID;
                 $('#hdEventID').val(selectedEvent.eventID);
                 $('#ASUNTO').val(selectedEvent.title);
 
@@ -986,6 +987,16 @@
                 $('#txtcalendarid').val(selectedEvent.calendarID);
                 $('#txteventid').val(selectedEvent.eventGid);
 
+                if (evento == 0) {
+                    let cliente = $("#FILTRO_CLIENTE").dxSelectBox('instance').option("value");
+                    if (cliente != 'undefiend' && cliente != null && cliente != 0) {
+                        $("#CLIENTE").dxSelectBox('instance').option("value", cliente);
+                    }
+                    let empleado = $("#FILTRO_EMPLEADO").dxSelectBox('instance').option("value");
+                    if (empleado != 'undefiend' && empleado != null && empleado != 0) {
+                        $("#EMPLEADO").dxSelectBox('instance').option("value", empleado);
+                    }
+                }
             }
             $('#myModal').modal('hide');
             $('#myModalSave').modal();

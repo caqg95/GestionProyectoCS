@@ -29,8 +29,8 @@ namespace GestionProyectoCS.Models.Datos
         public string USUARIO_MODIFICACION { get; set; }
         public Nullable<System.DateTime> FECHA_MODIFICACION { get; set; }
     
-        public virtual CLIENTE CLIENTE { get; set; }
         public virtual EMPLEADO EMPLEADO { get; set; }
         public virtual ESTADO ESTADO { get; set; }
+        public virtual CLIENTE CLIENTE { get; set; }
     }
 }

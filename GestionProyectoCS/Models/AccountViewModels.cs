@@ -71,6 +71,8 @@ namespace GestionProyectoCS.Models
         [Display(Name = "Nombre")]
         public string Name { get; set; }
         [Required]
+        public int ID_EMPELADO { get; set; }
+        [Required]
         [StringLength(100, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Contraseña")]
@@ -94,6 +96,8 @@ namespace GestionProyectoCS.Models
         public string Role { get; set; }
         public string Roles { get; set; }
         public bool isActive { get; set; }
+        public int ID_EMPLEADO { get; set; }
+
         [Required]
         [StringLength(100, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 6)]
         [DataType(DataType.Password)]

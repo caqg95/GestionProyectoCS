@@ -1,0 +1,105 @@
+﻿@model IEnumerable<GestionProyectoCS.Models.Datos.REGISTRO_MARCA>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FECHA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.H_ENTE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.H_SALE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.H_ENTA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.H_SALA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.H_ENTS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.H_SALS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACTIVO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.USUARIO_CREACION)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FECHA_CREACION)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.USUARIO_MODIFICACION)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FECHA_MODIFICACION)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EMPLEADO.NOMBRES)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FECHA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.H_ENTE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.H_SALE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.H_ENTA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.H_SALA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.H_ENTS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.H_SALS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACTIVO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.USUARIO_CREACION)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FECHA_CREACION)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.USUARIO_MODIFICACION)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FECHA_MODIFICACION)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EMPLEADO.NOMBRES)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID_REGISTRO_MARCA }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID_REGISTRO_MARCA }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID_REGISTRO_MARCA })
+        </td>
+    </tr>
+}
+
+</table>

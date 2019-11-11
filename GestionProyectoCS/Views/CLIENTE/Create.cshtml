@@ -43,7 +43,6 @@
                                             @Html.ValidationMessageFor(model => model.COD_CLIENTE, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
-
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.CLIENTE1, "Cliente", htmlAttributes: new { @class = "control-label col-md-2" })
                                         <div class="col-md-10">
@@ -56,6 +55,27 @@
                                         <div class="col-md-10">
                                             @Html.EditorFor(model => model.DIRECCION, new { htmlAttributes = new { @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.DIRECCION, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.LONGITUD, "Longitud", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.LONGITUD, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.LONGITUD, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.LATITUD, "Latitud", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.LATITUD, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.LATITUD, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.IP_PUBLIC, "Ip Publica", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.IP_PUBLIC, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.IP_PUBLIC, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                     <div class="form-group">

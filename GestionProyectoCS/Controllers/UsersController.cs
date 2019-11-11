@@ -81,6 +81,12 @@ namespace GestionProyectoCS.Controllers
         // GET: /Account/Register
         public ActionResult Register()
         {
+            var EMPLEADOS = db.EMPLEADOes.Where(x => x.ACTIVO == true).Select(x => new
+            {
+                x.ID_EMPLEADO,
+                NOMBRE = x.NOMBRES + " " + x.APELLIDOS
+            }).ToList();
+            ViewBag.ID_EMPELADO= new SelectList(EMPLEADOS, "ID_EMPLEADO", "NOMBRE");
             List<SelectListItem> list = new List<SelectListItem>();
             foreach (var role in RoleManager.Roles)
                 list.Add(new SelectListItem() { Value = role.Name, Text = role.Name });
@@ -119,6 +125,9 @@ namespace GestionProyectoCS.Controllers
         public async Task<ActionResult> EditUser(string id)
         {
             var user = await UserManager.FindByIdAsync(id);
+            var userd = db.AspNetUsers.Find(id);
+           
+
             UserWithRolViewModel uservm = new UserWithRolViewModel();
             var RolesForUser = await UserManager.GetRolesAsync(user.Id);
             uservm.Id = user.Id;
@@ -126,7 +135,14 @@ namespace GestionProyectoCS.Controllers
             uservm.Name = user.Name;
             uservm.Role = RolesForUser[0].ToString();
             uservm.isActive = user.isActive;
+            uservm.ID_EMPLEADO=Convert.ToInt32(userd.ID_EMPELADO);
 
+            var EMPLEADOS = db.EMPLEADOes.Where(x => x.ACTIVO == true).Select(x => new
+            {
+                x.ID_EMPLEADO,
+                NOMBRE = x.NOMBRES + " " + x.APELLIDOS
+            }).ToList();
+            ViewBag.ID_EMPELADO = new SelectList(EMPLEADOS, "ID_EMPLEADO", "NOMBRE", uservm.ID_EMPLEADO);
             //List<SelectListItem> list = new List<SelectListItem>();
             //foreach (var role in RoleManager.Roles)
             //    list.Add(new SelectListItem() { Value = role.Id.ToString(), Text = role.Name.ToString() });

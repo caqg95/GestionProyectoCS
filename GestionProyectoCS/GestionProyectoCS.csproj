@@ -253,6 +253,7 @@
     <Compile Include="Controllers\EMPLEADOController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MARCAController.cs" />
     <Compile Include="Controllers\RESPONSABLEController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -262,7 +263,6 @@
     <Compile Include="IdentityExtensions\AppUserManager.cs" />
     <Compile Include="IdentityExtensions\CustomizePasswordValidation.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Calendar\CalendarQuickstart.cs" />
     <Compile Include="Models\Datos\AspNetRole.cs">
       <DependentUpon>ModelGestionP.tt</DependentUpon>
     </Compile>
@@ -303,6 +303,9 @@
       <DependentUpon>ModelGestionP.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Datos\PROYECTO.cs">
+      <DependentUpon>ModelGestionP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Datos\REGISTRO_MARCA.cs">
       <DependentUpon>ModelGestionP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Datos\RESPONSABLE.cs">
@@ -896,6 +899,11 @@
     <Content Include="Views\Users\EditUser.cshtml" />
     <Content Include="Views\Agenda\VisitaEmpleado.cshtml" />
     <Content Include="Views\Agenda\DetalleVisita.cshtml" />
+    <Content Include="Views\MARCA\Create.cshtml" />
+    <Content Include="Views\MARCA\Delete.cshtml" />
+    <Content Include="Views\MARCA\Details.cshtml" />
+    <Content Include="Views\MARCA\Edit.cshtml" />
+    <Content Include="Views\MARCA\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -69,8 +69,11 @@
           <Property Name="ID_CLIENTE" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="COD_CLIENTE" Type="nvarchar" MaxLength="50" />
           <Property Name="CLIENTE" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="ACTIVO" Type="bit" Nullable="false" />
           <Property Name="DIRECCION" Type="nvarchar" MaxLength="200" />
+          <Property Name="IP_PUBLIC" Type="nchar" MaxLength="25" />
+          <Property Name="LONGITUD" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="LATITUD" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="ACTIVO" Type="bit" Nullable="false" />
           <Property Name="USUARIO_CREACION" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="FECHA_CREACION" Type="datetime" Nullable="false" />
           <Property Name="USUARIO_MODIFICACION" Type="nvarchar" MaxLength="50" />
@@ -148,6 +151,25 @@
           <Property Name="USUARIO_MODIFICACION" Type="int" />
           <Property Name="FECHA_MODIFICACION" Type="datetime" />
         </EntityType>
+        <EntityType Name="REGISTRO_MARCA">
+          <Key>
+            <PropertyRef Name="ID_REGISTRO_MARCA" />
+          </Key>
+          <Property Name="ID_REGISTRO_MARCA" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_EMPLEADO" Type="int" Nullable="false" />
+          <Property Name="FECHA" Type="date" Nullable="false" />
+          <Property Name="H_ENTE" Type="datetime" />
+          <Property Name="H_SALE" Type="datetime" />
+          <Property Name="H_ENTA" Type="datetime" />
+          <Property Name="H_SALA" Type="datetime" />
+          <Property Name="H_ENTS" Type="datetime" />
+          <Property Name="H_SALS" Type="datetime" />
+          <Property Name="ACTIVO" Type="bit" Nullable="false" />
+          <Property Name="USUARIO_CREACION" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FECHA_CREACION" Type="datetime" Nullable="false" />
+          <Property Name="USUARIO_MODIFICACION" Type="nvarchar" MaxLength="50" />
+          <Property Name="FECHA_MODIFICACION" Type="datetime" />
+        </EntityType>
         <EntityType Name="RESPONSABLE">
           <Key>
             <PropertyRef Name="ID_RESPONSABLE" />
@@ -215,6 +237,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_REGISTRO_MARCA_EMPLEADO">
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+          <End Role="REGISTRO_MARCA" Type="Self.REGISTRO_MARCA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="ID_EMPLEADO" />
+            </Principal>
+            <Dependent Role="REGISTRO_MARCA">
+              <PropertyRef Name="ID_EMPLEADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RESPONSABLE">
           <End Role="RESPONSABLE" Type="Self.RESPONSABLE" Multiplicity="1" />
           <End Role="CONTACTO" Type="Self.CONTACTO" Multiplicity="*" />
@@ -275,6 +309,7 @@
           <EntitySet Name="EMPLEADO" EntityType="Self.EMPLEADO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ESTADO" EntityType="Self.ESTADO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PROYECTO" EntityType="Self.PROYECTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="REGISTRO_MARCA" EntityType="Self.REGISTRO_MARCA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RESPONSABLE" EntityType="Self.RESPONSABLE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VISITA" EntityType="Self.VISITA" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CONTACTO" Association="Self.FK_CONTACTO">
@@ -288,6 +323,10 @@
           <AssociationSet Name="FK_PROYECTO_CLIENTE" Association="Self.FK_PROYECTO_CLIENTE">
             <End Role="CLIENTE" EntitySet="CLIENTE" />
             <End Role="PROYECTO" EntitySet="PROYECTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REGISTRO_MARCA_EMPLEADO" Association="Self.FK_REGISTRO_MARCA_EMPLEADO">
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+            <End Role="REGISTRO_MARCA" EntitySet="REGISTRO_MARCA" />
           </AssociationSet>
           <AssociationSet Name="FK_RESPONSABLE" Association="Self.FK_RESPONSABLE">
             <End Role="RESPONSABLE" EntitySet="RESPONSABLE" />
@@ -314,7 +353,6 @@
           <FunctionImport Name="SpListadoVistasCS" ReturnType="Collection(GESTIONPModel.SpListadoVistasCS_Result)" />
           <EntitySet Name="CARGOes" EntityType="GESTIONPModel.CARGO" />
           <EntitySet Name="CATALOGO_ACTIVIDAD" EntityType="GESTIONPModel.CATALOGO_ACTIVIDAD" />
-          <EntitySet Name="CLIENTEs" EntityType="GESTIONPModel.CLIENTE" />
           <EntitySet Name="EMPLEADOes" EntityType="GESTIONPModel.EMPLEADO" />
           <EntitySet Name="ESTADOes" EntityType="GESTIONPModel.ESTADO" />
           <EntitySet Name="PROYECTOes" EntityType="GESTIONPModel.PROYECTO" />
@@ -323,14 +361,6 @@
           <AssociationSet Name="FK_EMPLEADO_CARGO" Association="GESTIONPModel.FK_EMPLEADO_CARGO">
             <End Role="CARGO" EntitySet="CARGOes" />
             <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PROYECTO_CLIENTE" Association="GESTIONPModel.FK_PROYECTO_CLIENTE">
-            <End Role="CLIENTE" EntitySet="CLIENTEs" />
-            <End Role="PROYECTO" EntitySet="PROYECTOes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_VISITA_CLIENTE" Association="GESTIONPModel.FK_VISITA_CLIENTE">
-            <End Role="CLIENTE" EntitySet="CLIENTEs" />
-            <End Role="VISITA" EntitySet="VISITAs" />
           </AssociationSet>
           <AssociationSet Name="FK_VISITA_EMPLEADO" Association="GESTIONPModel.FK_VISITA_EMPLEADO">
             <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
@@ -341,10 +371,6 @@
             <End Role="VISITA" EntitySet="VISITAs" />
           </AssociationSet>
           <EntitySet Name="CONTACTOes" EntityType="GESTIONPModel.CONTACTO" />
-          <AssociationSet Name="FK_CONTACTO" Association="GESTIONPModel.FK_CONTACTO">
-            <End Role="CLIENTE" EntitySet="CLIENTEs" />
-            <End Role="CONTACTO" EntitySet="CONTACTOes" />
-          </AssociationSet>
           <AssociationSet Name="FK_RESPONSABLE" Association="GESTIONPModel.FK_RESPONSABLE">
             <End Role="RESPONSABLE" EntitySet="RESPONSABLEs" />
             <End Role="CONTACTO" EntitySet="CONTACTOes" />
@@ -352,6 +378,24 @@
           <EntitySet Name="AspNetRoles" EntityType="GESTIONPModel.AspNetRole" />
           <FunctionImport Name="SpListadoUsuarioDetail" ReturnType="Collection(GESTIONPModel.SpListadoUsuarioDetail_Result)" />
           <EntitySet Name="AspNetUsers" EntityType="GESTIONPModel.AspNetUser" />
+          <EntitySet Name="CLIENTEs" EntityType="GESTIONPModel.CLIENTE" />
+          <AssociationSet Name="FK_CONTACTO" Association="GESTIONPModel.FK_CONTACTO">
+            <End Role="CLIENTE" EntitySet="CLIENTEs" />
+            <End Role="CONTACTO" EntitySet="CONTACTOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROYECTO_CLIENTE" Association="GESTIONPModel.FK_PROYECTO_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTEs" />
+            <End Role="PROYECTO" EntitySet="PROYECTOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VISITA_CLIENTE" Association="GESTIONPModel.FK_VISITA_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTEs" />
+            <End Role="VISITA" EntitySet="VISITAs" />
+          </AssociationSet>
+          <EntitySet Name="REGISTRO_MARCA" EntityType="GESTIONPModel.REGISTRO_MARCA" />
+          <AssociationSet Name="FK_REGISTRO_MARCA_EMPLEADO" Association="GESTIONPModel.FK_REGISTRO_MARCA_EMPLEADO">
+            <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
+            <End Role="REGISTRO_MARCA" EntitySet="REGISTRO_MARCA" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="SpListadoVistasCS_Result">
           <Property Type="Int32" Name="ID_VISITA" Nullable="false" />
@@ -403,23 +447,6 @@
           <Property Name="USUARIO_MODIFICACION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="CLIENTE">
-          <Key>
-            <PropertyRef Name="ID_CLIENTE" />
-          </Key>
-          <Property Name="ID_CLIENTE" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="COD_CLIENTE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CLIENTE1" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
-          <Property Name="DIRECCION" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="USUARIO_CREACION" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="USUARIO_MODIFICACION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="PROYECTOes" Relationship="GESTIONPModel.FK_PROYECTO_CLIENTE" FromRole="CLIENTE" ToRole="PROYECTO" />
-          <NavigationProperty Name="VISITAs" Relationship="GESTIONPModel.FK_VISITA_CLIENTE" FromRole="CLIENTE" ToRole="VISITA" />
-          <NavigationProperty Name="CONTACTOes" Relationship="GESTIONPModel.FK_CONTACTO" FromRole="CLIENTE" ToRole="CONTACTO" />
-        </EntityType>
         <EntityType Name="EMPLEADO">
           <Key>
             <PropertyRef Name="ID_EMPLEADO" />
@@ -442,6 +469,7 @@
           <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
           <NavigationProperty Name="CARGO" Relationship="GESTIONPModel.FK_EMPLEADO_CARGO" FromRole="EMPLEADO" ToRole="CARGO" />
           <NavigationProperty Name="VISITAs" Relationship="GESTIONPModel.FK_VISITA_EMPLEADO" FromRole="EMPLEADO" ToRole="VISITA" />
+          <NavigationProperty Name="REGISTRO_MARCA" Relationship="GESTIONPModel.FK_REGISTRO_MARCA_EMPLEADO" FromRole="EMPLEADO" ToRole="REGISTRO_MARCA" />
         </EntityType>
         <EntityType Name="ESTADO">
           <Key>
@@ -507,9 +535,9 @@
           <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="USUARIO_MODIFICACION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="CLIENTE" Relationship="GESTIONPModel.FK_VISITA_CLIENTE" FromRole="VISITA" ToRole="CLIENTE" />
           <NavigationProperty Name="EMPLEADO" Relationship="GESTIONPModel.FK_VISITA_EMPLEADO" FromRole="VISITA" ToRole="EMPLEADO" />
           <NavigationProperty Name="ESTADO" Relationship="GESTIONPModel.FK_VISITA_ESTADO" FromRole="VISITA" ToRole="ESTADO" />
+          <NavigationProperty Name="CLIENTE" Relationship="GESTIONPModel.FK_VISITA_CLIENTE" FromRole="VISITA" ToRole="CLIENTE" />
         </EntityType>
         <Association Name="FK_EMPLEADO_CARGO">
           <End Type="GESTIONPModel.CARGO" Role="CARGO" Multiplicity="1" />
@@ -520,30 +548,6 @@
             </Principal>
             <Dependent Role="EMPLEADO">
               <PropertyRef Name="ID_CARGO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PROYECTO_CLIENTE">
-          <End Type="GESTIONPModel.CLIENTE" Role="CLIENTE" Multiplicity="1" />
-          <End Type="GESTIONPModel.PROYECTO" Role="PROYECTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CLIENTE">
-              <PropertyRef Name="ID_CLIENTE" />
-            </Principal>
-            <Dependent Role="PROYECTO">
-              <PropertyRef Name="ID_CLIENTE" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_VISITA_CLIENTE">
-          <End Type="GESTIONPModel.CLIENTE" Role="CLIENTE" Multiplicity="1" />
-          <End Type="GESTIONPModel.VISITA" Role="VISITA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CLIENTE">
-              <PropertyRef Name="ID_CLIENTE" />
-            </Principal>
-            <Dependent Role="VISITA">
-              <PropertyRef Name="ID_CLIENTE" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -590,21 +594,9 @@
           <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="USUARIO_MODIFICACION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="CLIENTE" Relationship="GESTIONPModel.FK_CONTACTO" FromRole="CONTACTO" ToRole="CLIENTE" />
           <NavigationProperty Name="RESPONSABLE" Relationship="GESTIONPModel.FK_RESPONSABLE" FromRole="CONTACTO" ToRole="RESPONSABLE" />
+          <NavigationProperty Name="CLIENTE" Relationship="GESTIONPModel.FK_CONTACTO" FromRole="CONTACTO" ToRole="CLIENTE" />
         </EntityType>
-        <Association Name="FK_CONTACTO">
-          <End Type="GESTIONPModel.CLIENTE" Role="CLIENTE" Multiplicity="1" />
-          <End Type="GESTIONPModel.CONTACTO" Role="CONTACTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CLIENTE">
-              <PropertyRef Name="ID_CLIENTE" />
-            </Principal>
-            <Dependent Role="CONTACTO">
-              <PropertyRef Name="ID_CLIENTE" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_RESPONSABLE">
           <End Type="GESTIONPModel.RESPONSABLE" Role="RESPONSABLE" Multiplicity="1" />
           <End Type="GESTIONPModel.CONTACTO" Role="CONTACTO" Multiplicity="*" />
@@ -650,6 +642,94 @@
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="ID_EMPELADO" Type="Int32" />
         </EntityType>
+        <EntityType Name="CLIENTE">
+          <Key>
+            <PropertyRef Name="ID_CLIENTE" />
+          </Key>
+          <Property Name="ID_CLIENTE" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="COD_CLIENTE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CLIENTE1" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DIRECCION" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="IP_PUBLIC" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="LONGITUD" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="LATITUD" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+          <Property Name="USUARIO_CREACION" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="USUARIO_MODIFICACION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CONTACTOes" Relationship="GESTIONPModel.FK_CONTACTO" FromRole="CLIENTE" ToRole="CONTACTO" />
+          <NavigationProperty Name="PROYECTOes" Relationship="GESTIONPModel.FK_PROYECTO_CLIENTE" FromRole="CLIENTE" ToRole="PROYECTO" />
+          <NavigationProperty Name="VISITAs" Relationship="GESTIONPModel.FK_VISITA_CLIENTE" FromRole="CLIENTE" ToRole="VISITA" />
+        </EntityType>
+        <Association Name="FK_CONTACTO">
+          <End Type="GESTIONPModel.CLIENTE" Role="CLIENTE" Multiplicity="1" />
+          <End Type="GESTIONPModel.CONTACTO" Role="CONTACTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Principal>
+            <Dependent Role="CONTACTO">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROYECTO_CLIENTE">
+          <End Type="GESTIONPModel.CLIENTE" Role="CLIENTE" Multiplicity="1" />
+          <End Type="GESTIONPModel.PROYECTO" Role="PROYECTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Principal>
+            <Dependent Role="PROYECTO">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VISITA_CLIENTE">
+          <End Type="GESTIONPModel.CLIENTE" Role="CLIENTE" Multiplicity="1" />
+          <End Type="GESTIONPModel.VISITA" Role="VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Principal>
+            <Dependent Role="VISITA">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="REGISTRO_MARCA">
+          <Key>
+            <PropertyRef Name="ID_REGISTRO_MARCA" />
+          </Key>
+          <Property Name="ID_REGISTRO_MARCA" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_EMPLEADO" Type="Int32" Nullable="false" />
+          <Property Name="FECHA" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="H_ENTE" Type="DateTime" Precision="3" />
+          <Property Name="H_SALE" Type="DateTime" Precision="3" />
+          <Property Name="H_ENTA" Type="DateTime" Precision="3" />
+          <Property Name="H_SALA" Type="DateTime" Precision="3" />
+          <Property Name="H_ENTS" Type="DateTime" Precision="3" />
+          <Property Name="H_SALS" Type="DateTime" Precision="3" />
+          <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+          <Property Name="USUARIO_CREACION" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="USUARIO_MODIFICACION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FECHA_MODIFICACION" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="EMPLEADO" Relationship="GESTIONPModel.FK_REGISTRO_MARCA_EMPLEADO" FromRole="REGISTRO_MARCA" ToRole="EMPLEADO" />
+        </EntityType>
+        <Association Name="FK_REGISTRO_MARCA_EMPLEADO">
+          <End Type="GESTIONPModel.EMPLEADO" Role="EMPLEADO" Multiplicity="1" />
+          <End Type="GESTIONPModel.REGISTRO_MARCA" Role="REGISTRO_MARCA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="ID_EMPLEADO" />
+            </Principal>
+            <Dependent Role="REGISTRO_MARCA">
+              <PropertyRef Name="ID_EMPLEADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -708,21 +788,6 @@
                 <ScalarProperty Name="TIPO" ColumnName="TIPO" />
                 <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
                 <ScalarProperty Name="ID_ACTIVIDAD" ColumnName="ID_ACTIVIDAD" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CLIENTEs">
-            <EntityTypeMapping TypeName="GESTIONPModel.CLIENTE">
-              <MappingFragment StoreEntitySet="CLIENTE">
-                <ScalarProperty Name="FECHA_MODIFICACION" ColumnName="FECHA_MODIFICACION" />
-                <ScalarProperty Name="USUARIO_MODIFICACION" ColumnName="USUARIO_MODIFICACION" />
-                <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
-                <ScalarProperty Name="USUARIO_CREACION" ColumnName="USUARIO_CREACION" />
-                <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
-                <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
-                <ScalarProperty Name="CLIENTE1" ColumnName="CLIENTE" />
-                <ScalarProperty Name="COD_CLIENTE" ColumnName="COD_CLIENTE" />
-                <ScalarProperty Name="ID_CLIENTE" ColumnName="ID_CLIENTE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -871,6 +936,44 @@
                 <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CLIENTEs">
+            <EntityTypeMapping TypeName="GESTIONPModel.CLIENTE">
+              <MappingFragment StoreEntitySet="CLIENTE">
+                <ScalarProperty Name="FECHA_MODIFICACION" ColumnName="FECHA_MODIFICACION" />
+                <ScalarProperty Name="USUARIO_MODIFICACION" ColumnName="USUARIO_MODIFICACION" />
+                <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
+                <ScalarProperty Name="USUARIO_CREACION" ColumnName="USUARIO_CREACION" />
+                <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+                <ScalarProperty Name="LATITUD" ColumnName="LATITUD" />
+                <ScalarProperty Name="LONGITUD" ColumnName="LONGITUD" />
+                <ScalarProperty Name="IP_PUBLIC" ColumnName="IP_PUBLIC" />
+                <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
+                <ScalarProperty Name="CLIENTE1" ColumnName="CLIENTE" />
+                <ScalarProperty Name="COD_CLIENTE" ColumnName="COD_CLIENTE" />
+                <ScalarProperty Name="ID_CLIENTE" ColumnName="ID_CLIENTE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REGISTRO_MARCA">
+            <EntityTypeMapping TypeName="GESTIONPModel.REGISTRO_MARCA">
+              <MappingFragment StoreEntitySet="REGISTRO_MARCA">
+                <ScalarProperty Name="FECHA_MODIFICACION" ColumnName="FECHA_MODIFICACION" />
+                <ScalarProperty Name="USUARIO_MODIFICACION" ColumnName="USUARIO_MODIFICACION" />
+                <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
+                <ScalarProperty Name="USUARIO_CREACION" ColumnName="USUARIO_CREACION" />
+                <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+                <ScalarProperty Name="H_SALS" ColumnName="H_SALS" />
+                <ScalarProperty Name="H_ENTS" ColumnName="H_ENTS" />
+                <ScalarProperty Name="H_SALA" ColumnName="H_SALA" />
+                <ScalarProperty Name="H_ENTA" ColumnName="H_ENTA" />
+                <ScalarProperty Name="H_SALE" ColumnName="H_SALE" />
+                <ScalarProperty Name="H_ENTE" ColumnName="H_ENTE" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+                <ScalarProperty Name="ID_EMPLEADO" ColumnName="ID_EMPLEADO" />
+                <ScalarProperty Name="ID_REGISTRO_MARCA" ColumnName="ID_REGISTRO_MARCA" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

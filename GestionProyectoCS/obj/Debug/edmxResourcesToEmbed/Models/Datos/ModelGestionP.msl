@@ -56,21 +56,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="CLIENTEs">
-      <EntityTypeMapping TypeName="GESTIONPModel.CLIENTE">
-        <MappingFragment StoreEntitySet="CLIENTE">
-          <ScalarProperty Name="FECHA_MODIFICACION" ColumnName="FECHA_MODIFICACION" />
-          <ScalarProperty Name="USUARIO_MODIFICACION" ColumnName="USUARIO_MODIFICACION" />
-          <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
-          <ScalarProperty Name="USUARIO_CREACION" ColumnName="USUARIO_CREACION" />
-          <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
-          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
-          <ScalarProperty Name="CLIENTE1" ColumnName="CLIENTE" />
-          <ScalarProperty Name="COD_CLIENTE" ColumnName="COD_CLIENTE" />
-          <ScalarProperty Name="ID_CLIENTE" ColumnName="ID_CLIENTE" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="EMPLEADOes">
       <EntityTypeMapping TypeName="GESTIONPModel.EMPLEADO">
         <MappingFragment StoreEntitySet="EMPLEADO">
@@ -216,6 +201,44 @@
           <ScalarProperty Name="isActive" ColumnName="isActive" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CLIENTEs">
+      <EntityTypeMapping TypeName="GESTIONPModel.CLIENTE">
+        <MappingFragment StoreEntitySet="CLIENTE">
+          <ScalarProperty Name="FECHA_MODIFICACION" ColumnName="FECHA_MODIFICACION" />
+          <ScalarProperty Name="USUARIO_MODIFICACION" ColumnName="USUARIO_MODIFICACION" />
+          <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
+          <ScalarProperty Name="USUARIO_CREACION" ColumnName="USUARIO_CREACION" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="LATITUD" ColumnName="LATITUD" />
+          <ScalarProperty Name="LONGITUD" ColumnName="LONGITUD" />
+          <ScalarProperty Name="IP_PUBLIC" ColumnName="IP_PUBLIC" />
+          <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
+          <ScalarProperty Name="CLIENTE1" ColumnName="CLIENTE" />
+          <ScalarProperty Name="COD_CLIENTE" ColumnName="COD_CLIENTE" />
+          <ScalarProperty Name="ID_CLIENTE" ColumnName="ID_CLIENTE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="REGISTRO_MARCA">
+      <EntityTypeMapping TypeName="GESTIONPModel.REGISTRO_MARCA">
+        <MappingFragment StoreEntitySet="REGISTRO_MARCA">
+          <ScalarProperty Name="FECHA_MODIFICACION" ColumnName="FECHA_MODIFICACION" />
+          <ScalarProperty Name="USUARIO_MODIFICACION" ColumnName="USUARIO_MODIFICACION" />
+          <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
+          <ScalarProperty Name="USUARIO_CREACION" ColumnName="USUARIO_CREACION" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="H_SALS" ColumnName="H_SALS" />
+          <ScalarProperty Name="H_ENTS" ColumnName="H_ENTS" />
+          <ScalarProperty Name="H_SALA" ColumnName="H_SALA" />
+          <ScalarProperty Name="H_ENTA" ColumnName="H_ENTA" />
+          <ScalarProperty Name="H_SALE" ColumnName="H_SALE" />
+          <ScalarProperty Name="H_ENTE" ColumnName="H_ENTE" />
+          <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+          <ScalarProperty Name="ID_EMPLEADO" ColumnName="ID_EMPLEADO" />
+          <ScalarProperty Name="ID_REGISTRO_MARCA" ColumnName="ID_REGISTRO_MARCA" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -18,6 +18,7 @@ namespace GestionProyectoCS.Models.Datos
         public EMPLEADO()
         {
             this.VISITAs = new HashSet<VISITA>();
+            this.REGISTRO_MARCA = new HashSet<REGISTRO_MARCA>();
         }
     
         public int ID_EMPLEADO { get; set; }
@@ -40,5 +41,7 @@ namespace GestionProyectoCS.Models.Datos
         public virtual CARGO CARGO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VISITA> VISITAs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<REGISTRO_MARCA> REGISTRO_MARCA { get; set; }
     }
 }

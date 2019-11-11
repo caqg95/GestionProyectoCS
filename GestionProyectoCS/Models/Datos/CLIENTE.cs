@@ -17,26 +17,29 @@ namespace GestionProyectoCS.Models.Datos
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CLIENTE()
         {
+            this.CONTACTOes = new HashSet<CONTACTO>();
             this.PROYECTOes = new HashSet<PROYECTO>();
             this.VISITAs = new HashSet<VISITA>();
-            this.CONTACTOes = new HashSet<CONTACTO>();
         }
     
         public int ID_CLIENTE { get; set; }
         public string COD_CLIENTE { get; set; }
         public string CLIENTE1 { get; set; }
-        public bool ACTIVO { get; set; }
         public string DIRECCION { get; set; }
+        public string IP_PUBLIC { get; set; }
+        public Nullable<decimal> LONGITUD { get; set; }
+        public Nullable<decimal> LATITUD { get; set; }
+        public bool ACTIVO { get; set; }
         public string USUARIO_CREACION { get; set; }
         public System.DateTime FECHA_CREACION { get; set; }
         public string USUARIO_MODIFICACION { get; set; }
         public Nullable<System.DateTime> FECHA_MODIFICACION { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CONTACTO> CONTACTOes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PROYECTO> PROYECTOes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VISITA> VISITAs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CONTACTO> CONTACTOes { get; set; }
     }
 }
